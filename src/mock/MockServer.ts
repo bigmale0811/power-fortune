@@ -5,6 +5,7 @@
  * Demo 模式下不需要真實伺服器連線。
  */
 import { RNG } from '@/mock/RNG';
+import { evaluateWays } from '@/evaluation/WaysEvaluator';
 
 /** 遊戲場景類型 */
 export type SceneType = 'BaseGame' | 'FreeGame';
@@ -84,6 +85,16 @@ export class MockServer {
     return this.generateSpin('FreeGame', FREE_SYMBOLS);
   }
 
+  /** 產生 Base Game 旋轉結果（含 WaysEvaluator 賠付計算） */
+  spinWithEval(): SpinResult {
+    return this.generateSpinWithEval('BaseGame', BASE_SYMBOLS);
+  }
+
+  /** 產生 Free Game 旋轉結果（含 WaysEvaluator 賠付計算） */
+  freeSpinWithEval(): SpinResult {
+    return this.generateSpinWithEval('FreeGame', FREE_SYMBOLS);
+  }
+
   /** 產生隨機格線 */
   generateGrid(symbols: readonly SymbolId[], cols: number, rows: number): GridResult {
     const grid: SymbolId[][] = [];
@@ -103,8 +114,23 @@ export class MockServer {
 
   private generateSpin(_scene: SceneType, symbols: readonly SymbolId[]): SpinResult {
     const gridResult = this.generateGrid(symbols, 5, 4);
+    return this.buildSpinResult(gridResult);
+  }
 
-    // 計算 Scatter 數量
+  /** 產生含賠付計算的旋轉結果 */
+  private generateSpinWithEval(_scene: SceneType, symbols: readonly SymbolId[]): SpinResult {
+    const gridResult = this.generateGrid(symbols, 5, 4);
+    const wins = evaluateWays(gridResult, this.bet);
+    const totalWin = wins.reduce((acc, w) => acc + w.payout, 0);
+    return this.buildSpinResult(gridResult, wins, totalWin);
+  }
+
+  /** 組裝 SpinResult（共用邏輯） */
+  private buildSpinResult(
+    gridResult: GridResult,
+    wins: readonly WinLine[] = [],
+    totalWin = 0,
+  ): SpinResult {
     let scatterCount = 0;
     let fortuneBallCount = 0;
     for (const col of gridResult.grid) {
@@ -116,8 +142,8 @@ export class MockServer {
 
     return Object.freeze({
       gridResult,
-      wins: [], // DEV-3 的 WaysEvaluator 會實際計算
-      totalWin: 0,
+      wins,
+      totalWin,
       scatterCount,
       triggerFreeGame: scatterCount >= 3,
       fortuneBallCount,
