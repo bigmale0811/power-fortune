@@ -271,12 +271,6 @@ export class BaseGameScene implements IScene {
       fill: 0xffdd00,
       fontWeight: 'bold',
       align: 'center',
-      dropShadow: {
-        color: 0x000000,
-        blur: 4,
-        distance: 2,
-        angle: Math.PI / 4,
-      },
     });
 
     this.winText = new Text({ text: '', style: winStyle });
@@ -292,12 +286,6 @@ export class BaseGameScene implements IScene {
       fontSize: 40,
       fill: 0xffcc00,
       fontWeight: 'bold',
-      dropShadow: {
-        color: 0x000000,
-        blur: 6,
-        distance: 3,
-        angle: Math.PI / 4,
-      },
     });
     const title = new Text({ text: '⚡ POWER FORTUNE ⚡', style: titleStyle });
     title.anchor.set(0.5);
