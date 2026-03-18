@@ -39,6 +39,13 @@ import { BetSelector } from '@/ui/BetSelector';
 import { BalanceDisplay } from '@/ui/BalanceDisplay';
 import { WinDisplay } from '@/ui/WinDisplay';
 import { JackpotBar } from '@/ui/JackpotBar';
+import { WinTierOverlay } from '@/ui/WinTierOverlay';
+import { WinHighlight } from '@/ui/WinHighlight';
+import { CoinEffect } from '@/ui/CoinEffect';
+import { SceneTransition } from '@/scenes/SceneTransition';
+import { FreeGameScene } from '@/scenes/FreeGameScene';
+import { MiniGameScene } from '@/scenes/MiniGameScene';
+import { SoundManager } from '@/audio/SoundManager';
 import { globalEventBus } from '@/core/EventBus';
 import type { SpinResult } from '@/core/constants';
 
@@ -92,6 +99,11 @@ export class BaseGameScene extends Container {
   private _winDisplay!: WinDisplay;
   private _messageText!: Text;
 
+  // Phase E: 贏分特效元件
+  private _winOverlay!: WinTierOverlay;
+  private _winHighlight!: WinHighlight;
+  private _coinEffect!: CoinEffect;
+
   // Ticker 回呼參考（移除時使用）
   private readonly _tickerFn: (ticker: Ticker) => void;
 
@@ -103,6 +115,8 @@ export class BaseGameScene extends Container {
     // 將 Ticker 回呼定義為成員屬性，確保 remove 時引用一致
     this._tickerFn = (ticker: Ticker) => {
       this._reelEngine?.update(ticker.deltaMS);
+      // Phase E: 驅動金幣粒子物理更新（dt 單位：秒）
+      this._coinEffect?.update(ticker.deltaMS / 1000);
     };
   }
 
@@ -133,24 +147,43 @@ export class BaseGameScene extends Container {
     // 6. 訊息文字列
     this._buildMessageText();
 
-    // 7. 初始化 GameController
+    // 7. Phase E: 贏分特效（初始化順序：底層 → 頂層）
+    // WinHighlight：格線高亮，置於轉盤區上方
+    this._winHighlight = new WinHighlight(0, REEL_AREA_TOP, W / 5, REEL_AREA_H / 4);
+    this.addChild(this._winHighlight);
+
+    // CoinEffect：金幣噴射粒子
+    this._coinEffect = new CoinEffect();
+    this.addChild(this._coinEffect);
+
+    // WinTierOverlay：全螢幕大獎覆蓋層（必須在最頂層）
+    this._winOverlay = new WinTierOverlay();
+    this.addChild(this._winOverlay);
+    await this._winOverlay.init();
+
+    // 8. SoundManager：預載音效（非阻塞，失敗不影響遊戲）
+    SoundManager.getInstance().preload().catch(() => {
+      console.warn('[BaseGameScene] SoundManager 預載失敗，遊戲繼續');
+    });
+
+    // 9. 初始化 GameController
     this._ctrl = new GameController({
       initialBalance: 50000,
       betOptions: [10, 20, 50, 100, 200, 500],
       defaultBetIndex: 3,
     });
 
-    // 8. 同步 UI 初始值
+    // 10. 同步 UI 初始值
     this._balanceDisplay.setBalance(this._ctrl.balance);
     this._betSelector.setBet(this._ctrl.currentBet);
 
-    // 9. 綁定事件
+    // 11. 綁定事件
     this._bindEvents();
 
-    // 10. 掛接 Ticker 驅動 ReelEngine
+    // 12. 掛接 Ticker 驅動 ReelEngine + CoinEffect
     this._app.ticker.add(this._tickerFn);
 
-    // 11. 初始化 SpinButton 貼圖（非阻塞）
+    // 13. 初始化 SpinButton 貼圖（非阻塞）
     this._spinButton.loadTextures().catch(() => {
       // 載入失敗維持 Graphics fallback，不影響遊戲
     });
@@ -386,6 +419,10 @@ export class BaseGameScene extends Container {
       return;
     }
 
+    // 清除上一局的特效（Phase E）
+    this._winHighlight.clear();
+    this._coinEffect.clear();
+
     // 禁用互動元件
     this._spinButton.setSpinning(true);
     this._betSelector.setEnabled(false);
@@ -431,10 +468,17 @@ export class BaseGameScene extends Container {
   }
 
   /**
-   * 顯示旋轉結果（贏分 / 訊息）
+   * 顯示旋轉結果（贏分 / 訊息 / 特效 / 場景切換）
+   *
+   * Phase E 整合：
+   *   - WinHighlight：所有贏線格子高亮
+   *   - WinTierOverlay：大獎全螢幕覆蓋（>= 10x bet）
+   *   - CoinEffect：大獎金幣噴射
+   *   - SceneTransition：觸發 FreeGame / MiniGame 場景切換
    */
   private _showResult(result: SpinResult): void {
-    const { wins, totalWin, scatterCount, triggerFreeGame } = result;
+    const { wins, totalWin, scatterCount, triggerFreeGame, fortuneBallCount } = result;
+    const currentBet = this._ctrl.currentBet;
 
     if (totalWin > 0) {
       // 啟動跑分動畫
@@ -443,6 +487,22 @@ export class BaseGameScene extends Container {
       this._setMessage(
         `${winCount} winning way${winCount > 1 ? 's' : ''}!`,
       );
+
+      // Phase E: 贏線高亮（顯示所有中獎格子）
+      this._winHighlight.showWins(wins);
+
+      // Phase E: 判定大獎等級並觸發對應特效
+      const ratio = currentBet > 0 ? totalWin / currentBet : 0;
+
+      if (ratio >= 10) {
+        // BIG_WIN 以上：顯示全螢幕覆蓋 + 金幣噴射
+        // WinTierOverlay.show() 內部計算等級（15x/50x/100x）
+        this._winOverlay.show(totalWin, currentBet);
+
+        // 金幣噴射：從畫面中央偏上方發射
+        const coinCount = ratio >= 100 ? 80 : ratio >= 30 ? 50 : 30;
+        this._coinEffect.burst(W / 2, REEL_AREA_BOTTOM, coinCount);
+      }
     } else {
       this._winDisplay.clear();
       this._setMessage('No win. Try again!');
@@ -454,9 +514,66 @@ export class BaseGameScene extends Container {
         `${this._messageText.text} (${scatterCount} Scatter${scatterCount > 1 ? 's' : ''})`,
       );
     }
+
+    // Phase F: FreeGame 場景切換
     if (triggerFreeGame) {
       this._setMessage(`FREE GAME TRIGGERED! (${scatterCount} Scatters)`);
+      this._transitionToFreeGame(scatterCount);
     }
+
+    // Phase G: MiniGame 場景切換（Fortune Ball Bonus）
+    if (fortuneBallCount >= 6) {
+      this._transitionToMiniGame();
+    }
+  }
+
+  /**
+   * 延遲後切換到 FreeGameScene
+   *
+   * 流程：
+   *   1. 等待 1.5 秒讓玩家看到觸發訊息
+   *   2. SceneTransition.crossFade 切換場景
+   *   3. FreeGameScene emit 'complete' 時切回 BaseGameScene
+   */
+  private _transitionToFreeGame(scatterCount: number): void {
+    setTimeout(async () => {
+      const freeScene = new FreeGameScene(this._app);
+      await freeScene.init();
+
+      // 交叉淡化切換場景
+      await SceneTransition.crossFade(this._app, this, freeScene);
+
+      // 啟動免費遊戲
+      freeScene.start(scatterCount);
+
+      // 監聽完成事件：切回 BaseGameScene
+      freeScene.on('complete', async () => {
+        await SceneTransition.crossFade(this._app, freeScene, this);
+        freeScene.destroy();
+
+        // 恢復餘額顯示
+        this._balanceDisplay.setBalance(this._ctrl.balance);
+      });
+    }, 1500);
+  }
+
+  /**
+   * 延遲後切換到 MiniGameScene（Fortune Ball Bonus）
+   */
+  private _transitionToMiniGame(): void {
+    setTimeout(async () => {
+      const miniScene = new MiniGameScene(this._app);
+      await miniScene.init();
+
+      await SceneTransition.crossFade(this._app, this, miniScene);
+      miniScene.start();
+
+      miniScene.on('complete', async () => {
+        await SceneTransition.crossFade(this._app, miniScene, this);
+        miniScene.destroy();
+        this._balanceDisplay.setBalance(this._ctrl.balance);
+      });
+    }, 1500);
   }
 
   /**
@@ -477,6 +594,10 @@ export class BaseGameScene extends Container {
     if (this._onAllStoppedBound) {
       globalEventBus.off(EVENT_ALL_STOPPED, this._onAllStoppedBound);
     }
+    // Phase E: 清理贏分特效元件
+    this._winHighlight?.clear();
+    this._coinEffect?.clear();
+    this._winOverlay?.dismiss();
     super.destroy({ children: true });
   }
 }
