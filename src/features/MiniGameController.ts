@@ -84,6 +84,9 @@ export class MiniGameController {
   // === Fortune Ball 收集 ===
 
   addBalls(count: number): void {
+    if (count < 0 || !Number.isInteger(count)) {
+      throw new Error(`[MiniGame] 無效的球數: ${count}`);
+    }
     this._collectedBalls += count;
   }
 
@@ -113,9 +116,9 @@ export class MiniGameController {
       throw new Error('[MiniGame] 遊戲未啟動或已結算');
     }
 
-    // 加權隨機選球（門號影響 seed 增加隨機感，但實際由 RNG 決定）
+    // 加權隨機選球（由 RNG 決定，門號不影響結果）
     const ball = this.randomBall();
-    this._revealedBalls.push(ball);
+    this._revealedBalls = [...this._revealedBalls, ball];
 
     // 檢查是否結算
     this.checkSettlement();

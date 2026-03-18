@@ -10,7 +10,7 @@ async function bootstrap(): Promise<void> {
   const statusEl = document.getElementById('status');
   function log(msg: string): void {
     if (statusEl) statusEl.textContent = msg;
-    console.log(msg);
+    if (import.meta.env.DEV) console.log(msg);
   }
 
   try {
@@ -210,7 +210,7 @@ async function bootstrap(): Promise<void> {
 
     // 成功 → 隱藏 status
     if (statusEl) statusEl.style.display = 'none';
-    console.log('[PowerFortune] Game ready!');
+    if (import.meta.env.DEV) console.log('[PowerFortune] Game ready!');
 
   } catch (err) {
     const msg = err instanceof Error ? err.stack ?? err.message : String(err);

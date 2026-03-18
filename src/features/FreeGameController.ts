@@ -5,7 +5,7 @@
  * Scatter ×3/4/5 → 8/12/20 次免費轉。
  */
 import { MockServer } from '@/mock/MockServer';
-import { FREE_SYMBOLS } from '@/core/constants';
+import { FREE_SYMBOLS, SCATTER_ID, FORTUNE_BALL_ID } from '@/core/constants';
 import type { SpinResult } from '@/core/constants';
 import { evaluateWays } from '@/evaluation/WaysEvaluator';
 
@@ -111,8 +111,8 @@ export class FreeGameController {
     let fortuneBallCount = 0;
     for (const col of gridResult.grid) {
       for (const sym of col) {
-        if (sym === 14) scatterCount++;
-        if (sym === 12) fortuneBallCount++;
+        if (sym === SCATTER_ID) scatterCount++;
+        if (sym === FORTUNE_BALL_ID) fortuneBallCount++;
       }
     }
 
