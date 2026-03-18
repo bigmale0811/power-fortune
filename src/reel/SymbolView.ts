@@ -13,8 +13,8 @@
 
 import { Container, Sprite, Texture } from 'pixi.js';
 
-/** 每格尺寸（設計稿：750×600 轉盤區 / 5col×4row） */
-export const SYMBOL_CELL_W = 150;
+/** 每格尺寸（對齊 Base_Reel 1202×640：5col=1100, 4row=600） */
+export const SYMBOL_CELL_W = 220;
 export const SYMBOL_CELL_H = 150;
 
 /** Scale Pulse 動畫參數 */

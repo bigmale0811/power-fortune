@@ -35,22 +35,21 @@
     }
   </style>
   <script>
-    window.__log = ['[1] Page loaded'];
-    window.onerror = function(msg, src, line, col) {
+    // 錯誤記錄（僅內部除錯，不顯示在畫面上）
+    window.__log = [];
+    window.onerror = function(msg, src, line) {
       window.__log.push('ERR: ' + msg + ' @' + src + ':' + line);
-      var el = document.getElementById('status');
-      if (el) { el.style.display = 'block'; el.textContent = window.__log.join('\n'); }
+      console.warn('[ErrorLog]', msg, src, line);
     };
     window.addEventListener('unhandledrejection', function(e) {
       var reason = e.reason || {};
       window.__log.push('REJECT: ' + (reason.stack || reason.message || reason));
-      var el = document.getElementById('status');
-      if (el) { el.style.display = 'block'; el.textContent = window.__log.join('\n'); }
+      console.warn('[ErrorLog]', reason);
     });
   </script>
 </head>
 <body>
-  <div id="status" style="display:none">[0] HTML parsed</div>
+  <!-- 錯誤狀態列已移除，避免污染遊戲畫面 -->
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

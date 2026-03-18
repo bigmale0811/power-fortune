@@ -55,19 +55,19 @@ import type { SpinResult } from '@/core/constants';
 const W = 1600;
 
 /** JackpotBar 高度 */
-const JACKPOT_H = 120;
+const JACKPOT_H = 100;
 
-/** Logo 區域高度（GameLogo_en 700×700 縮放後留空） */
-const LOGO_AREA_H = 300;
+/** Logo 區域高度 */
+const LOGO_AREA_H = 200;
 
-/** 轉盤區頂部 Y（Jackpot + Logo 之後，留 60px 間距） */
-const REEL_AREA_TOP = JACKPOT_H + LOGO_AREA_H + 60; // 480
+/** 轉盤區頂部 Y */
+const REEL_AREA_TOP = JACKPOT_H + LOGO_AREA_H + 40; // 340
 
 /** 轉盤區高度（Base_Reel.png 原始高度，不拉伸） */
 const REEL_AREA_H = 640;
 
 /** 轉盤區底部 Y */
-const REEL_AREA_BOTTOM = REEL_AREA_TOP + REEL_AREA_H; // 1120
+const REEL_AREA_BOTTOM = REEL_AREA_TOP + REEL_AREA_H; // 980
 
 /** Base_Reel.png 原始寬度 */
 const REEL_W = 1202;
@@ -82,20 +82,20 @@ const FRAME_H = 716;
 /** BaseFrame.png 水平置中 X = (1600 - 896) / 2 */
 const FRAME_X = Math.round((W - FRAME_W) / 2); // 352
 
-/** BaseFrame.png 垂直置中於轉盤區（框比轉盤高 76px，上下各延伸 38px） */
-const FRAME_Y = REEL_AREA_TOP - Math.round((FRAME_H - REEL_AREA_H) / 2); // 442
+/** BaseFrame.png 垂直置中於轉盤區 */
+const FRAME_Y = REEL_AREA_TOP - Math.round((FRAME_H - REEL_AREA_H) / 2); // 302
 
-/** WinDisplay 中心 Y（轉盤下方 20px） */
-const WIN_DISPLAY_Y = REEL_AREA_BOTTOM + 20; // 1140
+/** WinDisplay 中心 Y */
+const WIN_DISPLAY_Y = REEL_AREA_BOTTOM + 30; // 1010
 
 /** BalanceDisplay / BetSelector 行 Y */
-const PANEL_Y = WIN_DISPLAY_Y + 120; // 1260
+const PANEL_Y = WIN_DISPLAY_Y + 120; // 1130
 
 /** SpinButton 中心 Y */
-const SPIN_BTN_Y = PANEL_Y + 160; // 1420
+const SPIN_BTN_Y = PANEL_Y + 200; // 1330
 
 /** 訊息文字 Y */
-const MSG_Y = SPIN_BTN_Y + 120; // 1540
+const MSG_Y = SPIN_BTN_Y + 140; // 1470
 
 // ─────────────────────── BaseGameScene ───────────────────────
 
@@ -165,7 +165,8 @@ export class BaseGameScene extends Container {
 
     // 7. Phase E: 贏分特效（初始化順序：底層 → 頂層）
     // WinHighlight：格線高亮，置於轉盤區上方
-    this._winHighlight = new WinHighlight(0, REEL_AREA_TOP, W / 5, REEL_AREA_H / 4);
+    // WinHighlight 格子對齊 ReelEngine 符號尺寸 (220×150)
+    this._winHighlight = new WinHighlight(0, REEL_AREA_TOP, 220, 150);
     this.addChild(this._winHighlight);
 
     // CoinEffect：金幣噴射粒子
@@ -297,46 +298,36 @@ export class BaseGameScene extends Container {
    *    所有素材使用原始尺寸，不拉伸
    */
   private _buildReelArea(store: AssetStore): void {
-    // ── 轉盤底圖（Base_Reel.png：1202×640 原始尺寸）─────────────
+    // ── 層次（由下到上）：Base_Reel → BaseFrame → ReelEngine ────
+    // BaseFrame 在 ReelEngine 之下，確保符號不被邊框遮擋
+
+    // 1. 轉盤底圖（Base_Reel.png：1202×640 原始尺寸）
     const reelBgTex = store.tryGetTexture('Base_Reel_png')
                    ?? store.tryGetTexture('Base_Reel');
     if (reelBgTex) {
       const reelBg = new Sprite(reelBgTex);
-      // 使用原始尺寸，水平置中（不拉伸！）
       reelBg.x = REEL_X;          // 199
-      reelBg.y = REEL_AREA_TOP;   // 480
-      // 不設定 width/height，讓 Sprite 使用貼圖原始尺寸
+      reelBg.y = REEL_AREA_TOP;   // 340
       this.addChild(reelBg);
-      console.log(`[BaseGameScene] Base_Reel 放置完成：` +
-        `pos=(${REEL_X},${REEL_AREA_TOP}), 原始尺寸=${reelBgTex.width}×${reelBgTex.height}`);
     }
 
-    // ── ReelEngine（轉盤動畫引擎）────────────────────────────────
-    // symbolManager.getTextureMap() 提供 id→Texture 映射
-    this._reelEngine = new ReelEngine(symbolManager.getTextureMap());
-    // ReelEngine 內部 REEL_AREA_Y = 350
-    // 符號格線 (4行×150px=600px) 需垂直置中於 Base_Reel (640px)：
-    //   格線頂部 = REEL_AREA_TOP + (640-600)/2 = 480 + 20 = 500
-    //   容器 Y = 格線頂部 - ReelEngine 內部 REEL_AREA_Y = 500 - 350 = 150
-    this._reelEngine.y = REEL_AREA_TOP + (REEL_AREA_H - 4 * 150) / 2 - 350; // 150
-    this.addChild(this._reelEngine);
-
-    // ── 邊框覆蓋（BaseFrame.png：896×716 金色裝飾圓框）──────────
-    // BaseFrame.png 是金色裝飾性邊框（非中文文字），置中覆蓋於轉盤區上方
+    // 2. 邊框裝飾（BaseFrame.png：896×716 金色圓框）— 在符號之下
     const frameTex = store.tryGetTexture('BaseFrame_png')
                   ?? store.tryGetTexture('BaseFrame');
     if (frameTex) {
       const frame = new Sprite(frameTex);
-      // 使用原始尺寸，水平+垂直置中於轉盤區
       frame.x = FRAME_X;  // 352
-      frame.y = FRAME_Y;  // 442
-      // 不設定 width/height，使用原始尺寸
+      frame.y = FRAME_Y;  // 302
       this.addChild(frame);
-      console.log(`[BaseGameScene] BaseFrame 放置完成：` +
-        `pos=(${FRAME_X},${FRAME_Y}), 原始尺寸=${frameTex.width}×${frameTex.height}`);
-    } else {
-      console.warn('[BaseGameScene] BaseFrame 貼圖未找到，跳過邊框');
     }
+
+    // 3. ReelEngine（符號格線）— 最上層，不被遮擋
+    this._reelEngine = new ReelEngine(symbolManager.getTextureMap());
+    // 符號格線 (4行×150px=600px) 垂直置中於 Base_Reel (640px)
+    // 格線頂部 = REEL_AREA_TOP + (640-600)/2 = 340 + 20 = 360
+    // 容器 Y = 格線頂部 - ReelEngine 內部 REEL_AREA_Y(350) = 10
+    this._reelEngine.y = REEL_AREA_TOP + (REEL_AREA_H - 4 * 150) / 2 - 350; // 10
+    this.addChild(this._reelEngine);
   }
 
   /**
