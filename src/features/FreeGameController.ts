@@ -4,9 +4,10 @@
  * 管理 Free Game 的觸發、旋轉次數、Power-Up 選擇、Re-trigger 和結算。
  * Scatter ×3/4/5 → 8/12/20 次免費轉。
  */
-import { MockServer, FREE_SYMBOLS } from '@/mock/MockServer';
+import { MockServer } from '@/mock/MockServer';
+import { FREE_SYMBOLS } from '@/core/constants';
+import type { SpinResult } from '@/core/constants';
 import { evaluateWays } from '@/evaluation/WaysEvaluator';
-import type { SpinResult } from '@/mock/MockServer';
 
 /** Power-Up 增強類型（對應原版 5 種） */
 export type PowerUpType = 'Bamboo' | 'Coins' | 'Fortune' | 'Gourd' | 'Fish';

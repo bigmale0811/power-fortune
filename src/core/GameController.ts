@@ -7,8 +7,9 @@
  * 3. 管理自動旋轉
  * 4. 暴露唯讀狀態給 UI 層
  */
-import { MockServer, BASE_SYMBOLS, SCATTER_ID, FORTUNE_BALL_ID } from '@/mock/MockServer';
-import type { SpinResult } from '@/mock/MockServer';
+import { MockServer } from '@/mock/MockServer';
+import { BASE_SYMBOLS, SCATTER_ID, FORTUNE_BALL_ID } from '@/core/constants';
+import type { SpinResult } from '@/core/constants';
 import { evaluateWays } from '@/evaluation/WaysEvaluator';
 
 export interface GameControllerConfig {

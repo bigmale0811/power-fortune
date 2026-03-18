@@ -10,9 +10,9 @@
  * 3. ways 數 = 各列匹配行數的乘積
  * 4. 贏分 = pay × ways × bet
  */
-import { WILD_ID, SCATTER_ID, FORTUNE_BALL_ID } from '@/mock/MockServer';
+import { WILD_ID, SCATTER_ID, FORTUNE_BALL_ID } from '@/core/constants';
 import { getPayForSymbol } from '@/evaluation/PayTable';
-import type { GridResult, WinLine, SymbolId } from '@/mock/MockServer';
+import type { GridResult, WinLine, SymbolId } from '@/core/constants';
 
 /** 不參與 Ways 賠付的特殊符號 */
 const EXCLUDED_SYMBOLS = new Set([SCATTER_ID, FORTUNE_BALL_ID]);
