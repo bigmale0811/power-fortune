@@ -1,10 +1,10 @@
 /**
- * 原始解析度截圖驗證 — 900×1600 viewport
+ * 原始解析度截圖驗證 — 1600×2000 viewport（對齊原版設計解析度）
  * 避免縮小導致的誤判
  */
 import { test, expect } from '@playwright/test';
 
-test.use({ viewport: { width: 900, height: 1600 } });
+test.use({ viewport: { width: 1600, height: 2000 } });
 
 test('原始解析度：載入 + 旋轉 + 贏分', async ({ page }) => {
   const logs: string[] = [];
@@ -23,7 +23,7 @@ test('原始解析度：載入 + 旋轉 + 贏分', async ({ page }) => {
   // 旋轉 3 次
   for (let i = 1; i <= 3; i++) {
     const spinX = box!.x + box!.width / 2;
-    const spinY = box!.y + box!.height * 0.70; // SPIN 按鈕在 Y=1120/1600 ≈ 0.70
+    const spinY = box!.y + box!.height * 0.71; // SPIN 按鈕在 Y=1420/2000 ≈ 0.71
     await page.mouse.click(spinX, spinY);
     await page.waitForTimeout(3500);
     await page.screenshot({ path: `e2e/screenshots/full-02-spin${i}.png` });

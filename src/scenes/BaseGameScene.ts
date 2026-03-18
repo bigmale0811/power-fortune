@@ -1,18 +1,18 @@
 /**
  * BaseGameScene — 基礎遊戲主場景（真實資源版）
  *
- * 版面配置（900×1600 直向）：
- *   Y=0   ~ 80  : JackpotBar（四級頭獎橫列）
- *   Y=80  ~ 200 : Logo 標題區
- *   Y=200 ~ 900 : 轉盤區（5×4，700px 高）
- *                   - Base_Reel.png 轉盤背景
- *                   - ReelEngine（五欄轉盤動畫）
- *                   - BaseFrame.png 覆蓋邊框
- *   Y=900 ~ 990 : WinDisplay 贏分顯示（中央）
- *   Y=990 ~ 1100: BalanceDisplay（左）+ BetSelector（右）
- *   Y=1100~ 1280: SpinButton（中央）
- *   Y=1280~ 1350: 訊息文字
- *   Y=1350~ 1600: 底部預留區
+ * 版面配置（1600×2000 直向 — 對齊原版設計解析度）：
+ *   Y=0    ~ 120 : JackpotBar（四級頭獎橫列）
+ *   Y=120  ~ 420 : Logo 標題區（GameLogo_en 700×700 縮放）
+ *   Y=480  ~ 1120: 轉盤區（5×4，Base_Reel 1202×640 原始尺寸）
+ *                    - Base_Reel.png 轉盤背景（x=199, 1202×640）
+ *                    - ReelEngine（五欄轉盤動畫）
+ *                    - BaseFrame.png 覆蓋邊框（896×716, 置中）
+ *   Y=1140~ 1240 : WinDisplay 贏分顯示（中央）
+ *   Y=1260~ 1380 : BalanceDisplay（左）+ BetSelector（右）
+ *   Y=1420~ 1600 : SpinButton（中央）
+ *   Y=1640~ 1720 : 訊息文字
+ *   Y=1720~ 2000 : 底部預留區
  *
  * 使用的模組：
  *   - AssetStore (getTexture / getSpriteFrames)
@@ -49,37 +49,53 @@ import { SoundManager } from '@/audio/SoundManager';
 import { globalEventBus } from '@/core/EventBus';
 import type { SpinResult } from '@/core/constants';
 
-// ─────────────────────── 版面常數 ───────────────────────
+// ─────────────────────── 版面常數（1600×2000 設計解析度） ───────────────────────
 
-/** 遊戲畫布寬度 */
-const W = 900;
+/** 遊戲畫布寬度（對齊 Base_BG.jpg 原始尺寸） */
+const W = 1600;
 
 /** JackpotBar 高度 */
-const JACKPOT_H = 80;
+const JACKPOT_H = 120;
 
-/** Logo 區域高度 */
-const LOGO_AREA_H = 120;
+/** Logo 區域高度（GameLogo_en 700×700 縮放後留空） */
+const LOGO_AREA_H = 300;
 
-/** 轉盤區頂部 Y */
-const REEL_AREA_TOP = JACKPOT_H + LOGO_AREA_H; // 200
+/** 轉盤區頂部 Y（Jackpot + Logo 之後，留 60px 間距） */
+const REEL_AREA_TOP = JACKPOT_H + LOGO_AREA_H + 60; // 480
 
-/** 轉盤區高度 */
-const REEL_AREA_H = 700;
+/** 轉盤區高度（Base_Reel.png 原始高度，不拉伸） */
+const REEL_AREA_H = 640;
 
 /** 轉盤區底部 Y */
-const REEL_AREA_BOTTOM = REEL_AREA_TOP + REEL_AREA_H; // 900
+const REEL_AREA_BOTTOM = REEL_AREA_TOP + REEL_AREA_H; // 1120
 
-/** WinDisplay 中心 Y */
-const WIN_DISPLAY_Y = REEL_AREA_BOTTOM + 10; // 910
+/** Base_Reel.png 原始寬度 */
+const REEL_W = 1202;
+
+/** Base_Reel.png 水平置中 X = (1600 - 1202) / 2 */
+const REEL_X = Math.round((W - REEL_W) / 2); // 199
+
+/** BaseFrame.png 原始尺寸 */
+const FRAME_W = 896;
+const FRAME_H = 716;
+
+/** BaseFrame.png 水平置中 X = (1600 - 896) / 2 */
+const FRAME_X = Math.round((W - FRAME_W) / 2); // 352
+
+/** BaseFrame.png 垂直置中於轉盤區（框比轉盤高 76px，上下各延伸 38px） */
+const FRAME_Y = REEL_AREA_TOP - Math.round((FRAME_H - REEL_AREA_H) / 2); // 442
+
+/** WinDisplay 中心 Y（轉盤下方 20px） */
+const WIN_DISPLAY_Y = REEL_AREA_BOTTOM + 20; // 1140
 
 /** BalanceDisplay / BetSelector 行 Y */
-const PANEL_Y = WIN_DISPLAY_Y + 80; // 990
+const PANEL_Y = WIN_DISPLAY_Y + 120; // 1260
 
 /** SpinButton 中心 Y */
-const SPIN_BTN_Y = PANEL_Y + 130; // 1120
+const SPIN_BTN_Y = PANEL_Y + 160; // 1420
 
 /** 訊息文字 Y */
-const MSG_Y = SPIN_BTN_Y + 90; // 1210
+const MSG_Y = SPIN_BTN_Y + 120; // 1540
 
 // ─────────────────────── BaseGameScene ───────────────────────
 
@@ -192,18 +208,20 @@ export class BaseGameScene extends Container {
   // ─────────────────────── 私有：UI 建構 ───────────────────────
 
   /**
-   * 1. 全畫面背景：使用 Base_BG.jpg Sprite
+   * 1. 全畫面背景：使用 Base_BG.jpg Sprite（1600×2000 原始尺寸）
+   *    原圖即為 1600×2000，直接放置不拉伸
    *    若資源未載入則保持透明（App 本身已設 backgroundColor）
    */
   private _buildBackground(store: AssetStore): void {
     try {
       const bgTex = store.getTexture('Base_BG_jpg');
       const bg    = new Sprite(bgTex);
-      bg.width  = W;
-      bg.height = 1600;
+      // 原圖即為 1600×2000，直接以原始尺寸放置（不拉伸）
       bg.x = 0;
       bg.y = 0;
       this.addChild(bg);
+      console.log(`[BaseGameScene] Base_BG 放置完成：` +
+        `原始尺寸=${bgTex.width}×${bgTex.height}`);
     } catch {
       // Base_BG.jpg 鍵名可能因 res.json 而異，容錯處理
       console.warn('[BaseGameScene] Base_BG 貼圖未找到，使用純色背景');
@@ -271,40 +289,54 @@ export class BaseGameScene extends Container {
   }
 
   /**
-   * 4. 轉盤區（Y=200~900）
-   *    層次由下到上：Base_Reel（轉盤底圖）→ ReelEngine → BaseFrame（覆蓋邊框）
+   * 4. 轉盤區（Y=480~1120）
+   *    層次由下到上：Base_Reel（轉盤底圖）→ ReelEngine → BaseFrame（金色裝飾邊框）
    *
-   * Base_Reel.png 與 BaseFrame.png 的 Egret 鍵名規則：
-   *   PNG 鍵 = 不含路徑的檔名，全部以 "_png" 結尾或直接以原名存儲
-   *   此處使用 tryGetTexture 降級容錯，確保無資源時不崩潰
+   *    Base_Reel.png：1202×640，水平置中 x=199
+   *    BaseFrame.png：896×716，金色裝飾圓框，置中覆蓋於轉盤區
+   *    所有素材使用原始尺寸，不拉伸
    */
   private _buildReelArea(store: AssetStore): void {
-    // ── 轉盤底圖（Base_Reel.png）────────────────────────────────
+    // ── 轉盤底圖（Base_Reel.png：1202×640 原始尺寸）─────────────
     const reelBgTex = store.tryGetTexture('Base_Reel_png')
                    ?? store.tryGetTexture('Base_Reel');
     if (reelBgTex) {
       const reelBg = new Sprite(reelBgTex);
-      reelBg.x = 0;
-      reelBg.y = REEL_AREA_TOP;
-      reelBg.width  = W;
-      reelBg.height = REEL_AREA_H;
+      // 使用原始尺寸，水平置中（不拉伸！）
+      reelBg.x = REEL_X;          // 199
+      reelBg.y = REEL_AREA_TOP;   // 480
+      // 不設定 width/height，讓 Sprite 使用貼圖原始尺寸
       this.addChild(reelBg);
+      console.log(`[BaseGameScene] Base_Reel 放置完成：` +
+        `pos=(${REEL_X},${REEL_AREA_TOP}), 原始尺寸=${reelBgTex.width}×${reelBgTex.height}`);
     }
 
     // ── ReelEngine（轉盤動畫引擎）────────────────────────────────
     // symbolManager.getTextureMap() 提供 id→Texture 映射
     this._reelEngine = new ReelEngine(symbolManager.getTextureMap());
-    // ReelEngine 內部已有 REEL_AREA_Y=350 的偏移，
-    // 但我們需要配合版面將其位移至 REEL_AREA_TOP（200px）
-    // 因此將 ReelEngine 容器 Y 設為版面頂部偏移修正值：
-    //   ReelEngine 內部 REEL_AREA_Y = 350，畫面需要 200，差值 = -150
-    this._reelEngine.y = REEL_AREA_TOP - 350;
+    // ReelEngine 內部 REEL_AREA_Y = 350
+    // 符號格線 (4行×150px=600px) 需垂直置中於 Base_Reel (640px)：
+    //   格線頂部 = REEL_AREA_TOP + (640-600)/2 = 480 + 20 = 500
+    //   容器 Y = 格線頂部 - ReelEngine 內部 REEL_AREA_Y = 500 - 350 = 150
+    this._reelEngine.y = REEL_AREA_TOP + (REEL_AREA_H - 4 * 150) / 2 - 350; // 150
     this.addChild(this._reelEngine);
 
-    // ── 邊框覆蓋（BaseFrame.png）─────────────────────────────────
-    // 注意：BaseFrame.png 包含原版遊戲的中文文字（如「基本開始遊戲」），
-    // 在 clone 版本中不適合直接覆蓋，故不載入此圖層。
-    // 若日後需要邊框裝飾，可製作不含文字的純邊框圖片替換。
+    // ── 邊框覆蓋（BaseFrame.png：896×716 金色裝飾圓框）──────────
+    // BaseFrame.png 是金色裝飾性邊框（非中文文字），置中覆蓋於轉盤區上方
+    const frameTex = store.tryGetTexture('BaseFrame_png')
+                  ?? store.tryGetTexture('BaseFrame');
+    if (frameTex) {
+      const frame = new Sprite(frameTex);
+      // 使用原始尺寸，水平+垂直置中於轉盤區
+      frame.x = FRAME_X;  // 352
+      frame.y = FRAME_Y;  // 442
+      // 不設定 width/height，使用原始尺寸
+      this.addChild(frame);
+      console.log(`[BaseGameScene] BaseFrame 放置完成：` +
+        `pos=(${FRAME_X},${FRAME_Y}), 原始尺寸=${frameTex.width}×${frameTex.height}`);
+    } else {
+      console.warn('[BaseGameScene] BaseFrame 貼圖未找到，跳過邊框');
+    }
   }
 
   /**
@@ -313,15 +345,15 @@ export class BaseGameScene extends Container {
   private async _buildControlPanel(_store: AssetStore): Promise<void> {
     // ── WinDisplay（贏分顯示，轉盤下方中央）─────────────────────
     this._winDisplay = new WinDisplay();
-    this._winDisplay.x = W / 2 - 160; // WinDisplay 寬 320，以中央對齊
-    this._winDisplay.y = WIN_DISPLAY_Y;
+    this._winDisplay.x = W / 2 - 160; // WinDisplay 寬 320，水平置中
+    this._winDisplay.y = WIN_DISPLAY_Y; // 1140
     this.addChild(this._winDisplay);
     await this._winDisplay.init();
 
     // ── BalanceDisplay（餘額，左側）─────────────────────────────
     this._balanceDisplay = new BalanceDisplay(50000);
-    this._balanceDisplay.x = 60;
-    this._balanceDisplay.y = PANEL_Y;
+    this._balanceDisplay.x = W / 2 - 400; // 左側（以畫面中心為基準偏左）
+    this._balanceDisplay.y = PANEL_Y; // 1260
     this.addChild(this._balanceDisplay);
     await this._balanceDisplay.init();
 
@@ -330,15 +362,15 @@ export class BaseGameScene extends Container {
       [10, 20, 50, 100, 200, 500],
       100, // 預設下注 100
     );
-    this._betSelector.x = W - 60 - 180; // 右對齊，BetSelector 寬 180
-    this._betSelector.y = PANEL_Y;
+    this._betSelector.x = W / 2 + 220; // 右側（以畫面中心為基準偏右）
+    this._betSelector.y = PANEL_Y; // 1260
     this.addChild(this._betSelector);
     await this._betSelector.init();
 
     // ── SpinButton（中央）────────────────────────────────────────
     this._spinButton = new SpinButton();
-    this._spinButton.x = W / 2;  // SpinButton 以 (0,0) 為圓心
-    this._spinButton.y = SPIN_BTN_Y;
+    this._spinButton.x = W / 2;  // SpinButton 以 (0,0) 為圓心，水平置中
+    this._spinButton.y = SPIN_BTN_Y; // 1420
     this.addChild(this._spinButton);
   }
 

@@ -7,7 +7,7 @@
  *   crossFade — 淡出舊場景 → 移除舊場景、加入新場景 → 淡入新場景
  *
  * 實作方式：
- *   在 app.stage 最上層加入一個 900×1600 的純黑 Graphics 遮罩，
+ *   在 app.stage 最上層加入一個 1600×2000 的純黑 Graphics 遮罩，
  *   使用 requestAnimationFrame 驅動 alpha 逐幀插值（線性緩動）。
  *   動畫完成後移除遮罩，避免殘留在 stage 上。
  */
@@ -20,11 +20,11 @@ import {
 
 // ─────────────────────── 常數 ───────────────────────
 
-/** 畫布寬度 */
-const CANVAS_W = 900;
+/** 畫布寬度（對齊原版 1600×2000） */
+const CANVAS_W = 1600;
 
 /** 畫布高度 */
-const CANVAS_H = 1600;
+const CANVAS_H = 2000;
 
 /** 預設過渡時長（毫秒） */
 const DEFAULT_DURATION_MS = 400;

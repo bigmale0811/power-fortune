@@ -22,9 +22,9 @@ import {
 
 // ─────────────────────── 版面常數 ───────────────────────
 
-/** 畫布設計尺寸（直向） */
-const CANVAS_W = 900;
-const CANVAS_H = 1600;
+/** 畫布設計尺寸（直向，對齊原版 1600×2000） */
+const CANVAS_W = 1600;
+const CANVAS_H = 2000;
 
 /** Logo 頂部 Y 位置 */
 const LOGO_Y = 280;

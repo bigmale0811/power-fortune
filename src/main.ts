@@ -2,7 +2,7 @@
  * Power Fortune 財神報喜 — 主入口（視覺層整合版）
  *
  * 啟動流程：
- *   1. 建立 PixiJS Application (900×1600)，掛載 canvas
+ *   1. 建立 PixiJS Application (1600×2000)，掛載 canvas
  *   2. 設定響應式 Letterbox 縮放
  *   3. 建立 LoadingScene，加入 stage
  *   4. 建立 AssetPipeline，onProgress → LoadingScene.setProgress
@@ -28,8 +28,8 @@ import type { EgretMCData } from '@/reel/SymbolManager';
 
 // ─────────────────────── 版面常數 ───────────────────────
 
-const GAME_W = 900;
-const GAME_H = 1600;
+const GAME_W = 1600;
+const GAME_H = 2000;
 
 // ─────────────────────── 主要啟動函式 ───────────────────────
 
@@ -125,13 +125,13 @@ async function bootstrap(): Promise<void> {
 /**
  * 設定 Letterbox 響應式縮放
  *
- * 保持 900:1600 比例置中顯示，
+ * 保持 1600:2000 (4:5) 比例置中顯示，
  * 可用寬度不足時以高度為準，反之以寬度為準。
  *
  * @param canvas - PixiJS app.canvas（HTMLCanvasElement）
  */
 function setupLetterbox(canvas: HTMLCanvasElement): void {
-  // 套用 CSS 使 canvas 置中
+  // 套用 CSS 使 canvas 置中（Letterbox：保持 1600:2000 = 4:5 比例）
   canvas.style.position = 'absolute';
   canvas.style.left     = '50%';
   canvas.style.top      = '50%';
@@ -140,7 +140,7 @@ function setupLetterbox(canvas: HTMLCanvasElement): void {
   function resize(): void {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const gameRatio = GAME_W / GAME_H;
+    const gameRatio = GAME_W / GAME_H; // 1600/2000 = 0.8
     const viewRatio = vw / vh;
 
     let w: number;

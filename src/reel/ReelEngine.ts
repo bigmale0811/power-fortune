@@ -44,8 +44,8 @@ const COLS = 5;
 const ROWS = 4;
 /** 欄間距（像素） */
 const COL_GAP = 2;
-/** 轉盤區左上角 X（在 900px 畫布上置中 750px 區域） */
-const REEL_AREA_X = (900 - COLS * SYMBOL_CELL_W) / 2; // 75
+/** 轉盤區左上角 X（在 1600px 畫布上置中 750px 符號區域） */
+const REEL_AREA_X = (1600 - COLS * SYMBOL_CELL_W) / 2; // 425
 /** 轉盤區左上角 Y */
 const REEL_AREA_Y = 350;
 

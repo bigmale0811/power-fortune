@@ -3,7 +3,7 @@
  *
  * 實作 ADR-003：Portrait-first contain-fit letterbox
  * 根據瀏覽器視窗大小，以 contain 模式等比縮放 canvas，
- * 保持設計解析度比例（900:1600），兩側補黑邊。
+ * 保持設計解析度比例（1600:2000 = 4:5），兩側補黑邊。
  */
 
 export interface ResizeResult {

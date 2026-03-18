@@ -2,16 +2,16 @@
  * GameApp — PixiJS v8 應用程式包裝
  *
  * 職責：
- * 1. 初始化 PixiJS Application（900×1600 直向畫布）
+ * 1. 初始化 PixiJS Application（1600×2000 直向畫布）
  * 2. Letterbox 響應式縮放（ADR-003）
  * 3. 提供全域入口點給各模組
  */
 import { Application, Container } from 'pixi.js';
 import { ResizeManager } from '@/core/ResizeManager';
 
-/** 遊戲設計解析度（直向） */
-export const GAME_WIDTH = 900;
-export const GAME_HEIGHT = 1600;
+/** 遊戲設計解析度（直向，對齊原版 Base_BG.jpg 1600×2000） */
+export const GAME_WIDTH = 1600;
+export const GAME_HEIGHT = 2000;
 
 export class GameApp {
   private app: Application | null = null;
