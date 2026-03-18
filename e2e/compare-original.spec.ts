@@ -6,7 +6,7 @@
 import { test, expect } from '@playwright/test';
 
 const ORIGINAL_URL = 'https://uat.bfrk.org/egame-lobby?t=1&egame_id=3&egame_vendor=fc';
-const CLONE_URL = 'http://localhost:5173';
+const CLONE_URL = 'http://localhost:5174';
 
 test.describe('原版 vs 克隆版比對', () => {
   test('截取原版遊戲主畫面', async ({ browser }) => {

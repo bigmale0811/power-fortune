@@ -9,7 +9,7 @@ export default defineConfig({
   reporter: 'list',
   timeout: 60000,
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://localhost:5174',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     viewport: { width: 450, height: 800 },
@@ -21,8 +21,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx vite --port 5173',
-    port: 5173,
+    command: 'npx vite --port 5174',
+    port: 5174,
     reuseExistingServer: true,
     timeout: 30000,
   },

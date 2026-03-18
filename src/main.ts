@@ -112,6 +112,11 @@ async function bootstrap(): Promise<void> {
   app.stage.addChild(gameScene);
   await gameScene.init();
 
+  // 暴露 app 給 E2E 測試（僅 dev 環境）
+  if (import.meta.env.DEV) {
+    (globalThis as any).__PIXI_APP__ = app;
+  }
+
   console.log('[PowerFortune] 遊戲就緒！');
 }
 

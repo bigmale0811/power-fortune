@@ -10,7 +10,7 @@
  */
 import { test, expect } from '@playwright/test';
 
-const BASE_URL = 'http://localhost:5173';
+const BASE_URL = 'http://localhost:5174';
 
 test.describe('Power Fortune 視覺驗證', () => {
   test('載入畫面正常渲染', async ({ page }) => {
