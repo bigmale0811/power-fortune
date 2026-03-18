@@ -13,9 +13,9 @@
 
 import { Container, Sprite, Texture } from 'pixi.js';
 
-/** 每格尺寸（對齊 Base_Reel 1202×640：5col=1100, 4row=600） */
-export const SYMBOL_CELL_W = 220;
-export const SYMBOL_CELL_H = 150;
+/** 每格尺寸（對齊原版：符號幾乎填滿螢幕寬度 5col×280=1400） */
+export const SYMBOL_CELL_W = 280;
+export const SYMBOL_CELL_H = 195;
 
 /** Scale Pulse 動畫參數 */
 const PULSE_MIN = 1.0;

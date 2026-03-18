@@ -54,48 +54,45 @@ import type { SpinResult } from '@/core/constants';
 /** 遊戲畫布寬度（對齊 Base_BG.jpg 原始尺寸） */
 const W = 1600;
 
-/** JackpotBar 高度 */
-const JACKPOT_H = 100;
+// ── 對齊原版佈局比例（符號填滿寬度，消除底部空白） ──
 
-/** Logo 區域高度 */
-const LOGO_AREA_H = 200;
+/** JackpotBar 高度（原版 GRAND 徽章 + MINOR/MAJOR/MINI 約佔 20%） */
+const JACKPOT_H = 250;
 
-/** 轉盤區頂部 Y */
-const REEL_AREA_TOP = JACKPOT_H + LOGO_AREA_H + 40; // 340
+/** 轉盤區頂部 Y（Jackpot 下方緊接 BaseFrame 裝飾） */
+const REEL_AREA_TOP = 400;
 
-/** 轉盤區高度（Base_Reel.png 原始高度，不拉伸） */
-const REEL_AREA_H = 640;
+/** 符號格線實際高度 (4行×195px) */
+const GRID_H = 4 * 195; // 780
+
+/** 轉盤區高度（含符號上下邊距） */
+const REEL_AREA_H = GRID_H + 40; // 820
 
 /** 轉盤區底部 Y */
-const REEL_AREA_BOTTOM = REEL_AREA_TOP + REEL_AREA_H; // 980
+const REEL_AREA_BOTTOM = REEL_AREA_TOP + REEL_AREA_H; // 1220
 
-/** Base_Reel.png 原始寬度 */
-const REEL_W = 1202;
-
-/** Base_Reel.png 水平置中 X = (1600 - 1202) / 2 */
-const REEL_X = Math.round((W - REEL_W) / 2); // 199
+/** 符號格線寬度 (5col × 280px) */
+const GRID_W = 5 * 280; // 1400
 
 /** BaseFrame.png 原始尺寸 */
 const FRAME_W = 896;
 const FRAME_H = 716;
-
-/** BaseFrame.png 水平置中 X = (1600 - 896) / 2 */
 const FRAME_X = Math.round((W - FRAME_W) / 2); // 352
 
-/** BaseFrame.png 垂直置中於轉盤區 */
-const FRAME_Y = REEL_AREA_TOP - Math.round((FRAME_H - REEL_AREA_H) / 2); // 302
+/** BaseFrame 頂部對齊轉盤區上方（金色圓框裝飾在符號上方可見） */
+const FRAME_Y = REEL_AREA_TOP - Math.round((FRAME_H - REEL_AREA_H) / 2); // 348
 
-/** WinDisplay 中心 Y */
-const WIN_DISPLAY_Y = REEL_AREA_BOTTOM + 30; // 1010
+/** WinDisplay Y（轉盤下方） */
+const WIN_DISPLAY_Y = REEL_AREA_BOTTOM + 20; // 1240
 
-/** BalanceDisplay / BetSelector 行 Y */
-const PANEL_Y = WIN_DISPLAY_Y + 120; // 1130
+/** 資訊列 Y：Balance / Bet / Win（對齊原版底部面板） */
+const PANEL_Y = WIN_DISPLAY_Y + 100; // 1340
 
-/** SpinButton 中心 Y */
-const SPIN_BTN_Y = PANEL_Y + 200; // 1330
+/** SpinButton 中心 Y（大按鈕，對齊原版） */
+const SPIN_BTN_Y = PANEL_Y + 200; // 1540
 
 /** 訊息文字 Y */
-const MSG_Y = SPIN_BTN_Y + 140; // 1470
+const MSG_Y = SPIN_BTN_Y + 160; // 1700
 
 // ─────────────────────── BaseGameScene ───────────────────────
 
@@ -165,8 +162,8 @@ export class BaseGameScene extends Container {
 
     // 7. Phase E: 贏分特效（初始化順序：底層 → 頂層）
     // WinHighlight：格線高亮，置於轉盤區上方
-    // WinHighlight 格子對齊 ReelEngine 符號尺寸 (220×150)
-    this._winHighlight = new WinHighlight(0, REEL_AREA_TOP, 220, 150);
+    // WinHighlight 格子對齊 ReelEngine 符號尺寸 (280×195)
+    this._winHighlight = new WinHighlight(0, REEL_AREA_TOP, 280, 195);
     this.addChild(this._winHighlight);
 
     // CoinEffect：金幣噴射粒子
@@ -301,13 +298,16 @@ export class BaseGameScene extends Container {
     // ── 層次（由下到上）：Base_Reel → BaseFrame → ReelEngine ────
     // BaseFrame 在 ReelEngine 之下，確保符號不被邊框遮擋
 
-    // 1. 轉盤底圖（Base_Reel.png：1202×640 原始尺寸）
+    // 1. 轉盤底圖（Base_Reel.png）— 拉伸至符號格線區域寬度
     const reelBgTex = store.tryGetTexture('Base_Reel_png')
                    ?? store.tryGetTexture('Base_Reel');
     if (reelBgTex) {
       const reelBg = new Sprite(reelBgTex);
-      reelBg.x = REEL_X;          // 199
-      reelBg.y = REEL_AREA_TOP;   // 340
+      // 底圖拉伸至符號格線寬度
+      reelBg.x = (W - GRID_W) / 2; // 100
+      reelBg.y = REEL_AREA_TOP;
+      reelBg.width = GRID_W;
+      reelBg.height = REEL_AREA_H;
       this.addChild(reelBg);
     }
 
@@ -323,10 +323,10 @@ export class BaseGameScene extends Container {
 
     // 3. ReelEngine（符號格線）— 最上層，不被遮擋
     this._reelEngine = new ReelEngine(symbolManager.getTextureMap());
-    // 符號格線 (4行×150px=600px) 垂直置中於 Base_Reel (640px)
-    // 格線頂部 = REEL_AREA_TOP + (640-600)/2 = 340 + 20 = 360
-    // 容器 Y = 格線頂部 - ReelEngine 內部 REEL_AREA_Y(350) = 10
-    this._reelEngine.y = REEL_AREA_TOP + (REEL_AREA_H - 4 * 150) / 2 - 350; // 10
+    // 符號格線垂直置中於轉盤區
+    // 格線頂部 = REEL_AREA_TOP + (REEL_AREA_H - GRID_H)/2 = 400 + 20 = 420
+    // 容器 Y = 格線頂部 - ReelEngine 內部 REEL_AREA_Y(350) = 70
+    this._reelEngine.y = REEL_AREA_TOP + (REEL_AREA_H - GRID_H) / 2 - 350; // 70
     this.addChild(this._reelEngine);
   }
 
