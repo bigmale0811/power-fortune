@@ -302,16 +302,9 @@ export class BaseGameScene extends Container {
     this.addChild(this._reelEngine);
 
     // ── 邊框覆蓋（BaseFrame.png）─────────────────────────────────
-    const frameTex = store.tryGetTexture('BaseFrame_png')
-                  ?? store.tryGetTexture('BaseFrame');
-    if (frameTex) {
-      const frame = new Sprite(frameTex);
-      frame.x = 0;
-      frame.y = REEL_AREA_TOP;
-      frame.width  = W;
-      frame.height = REEL_AREA_H;
-      this.addChild(frame);
-    }
+    // 注意：BaseFrame.png 包含原版遊戲的中文文字（如「基本開始遊戲」），
+    // 在 clone 版本中不適合直接覆蓋，故不載入此圖層。
+    // 若日後需要邊框裝飾，可製作不含文字的純邊框圖片替換。
   }
 
   /**
@@ -320,7 +313,7 @@ export class BaseGameScene extends Container {
   private async _buildControlPanel(_store: AssetStore): Promise<void> {
     // ── WinDisplay（贏分顯示，轉盤下方中央）─────────────────────
     this._winDisplay = new WinDisplay();
-    this._winDisplay.x = W / 2 - 100; // WinDisplay 寬 200，以中央對齊
+    this._winDisplay.x = W / 2 - 160; // WinDisplay 寬 320，以中央對齊
     this._winDisplay.y = WIN_DISPLAY_Y;
     this.addChild(this._winDisplay);
     await this._winDisplay.init();
@@ -429,6 +422,9 @@ export class BaseGameScene extends Container {
     this._winDisplay.clear();
     this._setMessage('Spinning...');
 
+    // 立即更新餘額顯示（spin() 已完成扣款，讓玩家即時看到餘額變動）
+    this._balanceDisplay.setBalance(this._ctrl.balance);
+
     // 啟動 ReelEngine（傳入目標格線）
     this._reelEngine.spin(result.gridResult.grid);
 
@@ -485,7 +481,7 @@ export class BaseGameScene extends Container {
       this._winDisplay.showWin(totalWin);
       const winCount = wins.length;
       this._setMessage(
-        `${winCount} winning way${winCount > 1 ? 's' : ''}!`,
+        `WIN ${totalWin.toLocaleString('en-US')}! (${winCount} way${winCount > 1 ? 's' : ''})`,
       );
 
       // Phase E: 贏線高亮（顯示所有中獎格子）

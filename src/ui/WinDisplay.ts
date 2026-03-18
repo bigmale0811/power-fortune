@@ -16,8 +16,8 @@ import { Container, Graphics, Sprite, Text, TextStyle, Assets, Ticker } from 'pi
  */
 
 // ── 尺寸與顏色常數 ──────────────────────────────────────────────────────────
-const W = 200;
-const H = 70;
+const W = 320;
+const H = 80;
 
 const COLOR_BG      = 0x0d0820;
 const COLOR_BORDER  = 0xd4af37;
@@ -77,7 +77,7 @@ export class WinDisplay extends Container {
             text: '0',
             style: new TextStyle({
                 fontFamily: 'Arial Black',
-                fontSize: 34,
+                fontSize: 40,
                 fontWeight: 'bold',
                 fill: COLOR_WIN,
                 dropShadow: {
@@ -91,7 +91,7 @@ export class WinDisplay extends Container {
         });
         this._valueText.anchor.set(0.5, 0);
         this._valueText.x = W / 2;
-        this._valueText.y = 24;
+        this._valueText.y = 22;
         this.addChild(this._valueText);
 
         // Ticker 回呼（使用 closure 保持 this 綁定）

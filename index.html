@@ -38,17 +38,19 @@
     window.__log = ['[1] Page loaded'];
     window.onerror = function(msg, src, line, col) {
       window.__log.push('ERR: ' + msg + ' @' + src + ':' + line);
-      document.getElementById('status').textContent = window.__log.join('\n');
+      var el = document.getElementById('status');
+      if (el) { el.style.display = 'block'; el.textContent = window.__log.join('\n'); }
     };
     window.addEventListener('unhandledrejection', function(e) {
       var reason = e.reason || {};
       window.__log.push('REJECT: ' + (reason.stack || reason.message || reason));
-      document.getElementById('status').textContent = window.__log.join('\n');
+      var el = document.getElementById('status');
+      if (el) { el.style.display = 'block'; el.textContent = window.__log.join('\n'); }
     });
   </script>
 </head>
 <body>
-  <div id="status">[0] HTML parsed</div>
+  <div id="status" style="display:none">[0] HTML parsed</div>
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

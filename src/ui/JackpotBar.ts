@@ -124,15 +124,20 @@ export class JackpotBar extends Container {
                 text: this._formatValue(this._counterValues[i] ?? tier.baseValue),
                 style: new TextStyle({
                     fontFamily: 'Arial Black',
-                    fontSize: 13,
+                    fontSize: 12,
                     fontWeight: 'bold',
                     fill: tier.textColor,
                     dropShadow: { color: 0x000000, blur: 4, distance: 1, angle: Math.PI / 4 },
                 }),
             });
             valueText.anchor.set(0, 0.5);
-            valueText.x = centerX + 2;   // 數字在標籤右側
+            valueText.x = centerX;        // 數字在標籤右側
             valueText.y = BAR_H / 2;
+            // 限制文字不超出此等級欄位右邊界
+            const maxTextWidth = TIER_W / 2 - 4;
+            if (valueText.width > maxTextWidth) {
+                valueText.scale.x = maxTextWidth / valueText.width;
+            }
             this.addChild(valueText);
             this._counterTexts.push(valueText);
         }
