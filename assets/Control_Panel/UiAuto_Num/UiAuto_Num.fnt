@@ -1,0 +1,11 @@
+{"file":"UiAuto_Num.png","frames":{
+"0":{"x":105,"y":1,"w":51,"h":66,"offX":1,"offY":3,"sourceW":52,"sourceH":72},
+"1":{"x":155,"y":72,"w":35,"h":66,"offX":3,"offY":3,"sourceW":40,"sourceH":72},
+"2":{"x":208,"y":71,"w":45,"h":67,"offX":4,"offY":3,"sourceW":52,"sourceH":72},
+"3":{"x":105,"y":69,"w":48,"h":69,"offX":2,"offY":2,"sourceW":52,"sourceH":72},
+"4":{"x":1,"y":1,"w":50,"h":69,"offX":1,"offY":2,"sourceW":52,"sourceH":72},
+"5":{"x":158,"y":1,"w":48,"h":69,"offX":2,"offY":2,"sourceW":52,"sourceH":72},
+"6":{"x":53,"y":1,"w":50,"h":68,"offX":1,"offY":2,"sourceW":52,"sourceH":72},
+"7":{"x":1,"y":72,"w":43,"h":68,"offX":4,"offY":2,"sourceW":52,"sourceH":72},
+"8":{"x":208,"y":1,"w":46,"h":68,"offX":3,"offY":2,"sourceW":52,"sourceH":72},
+"9":{"x":53,"y":71,"w":48,"h":67,"offX":2,"offY":2,"sourceW":52,"sourceH":72}}}
