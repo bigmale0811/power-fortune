@@ -1,0 +1,1977 @@
+{
+	"groups": [
+		{
+			"keys": "GameLogo_zh_png,GameMSG02_zh_png,ClickToPlay_zh_png,LoadingAsset_Text_zh_png,ProviderInfo_zh_png,GameMSG01_zh_V_png,GameMSG01_zh_H_png",
+			"name": "preload_zh"
+		},
+		{
+			"keys": "GameLogo_en_png,GameMSG02_en_png,ClickToPlay_en_png,LoadingAsset_Text_en_png,GameMSG01_en_V_png,GameMSG01_en_H_png,ProviderInfo_en_png",
+			"name": "preload_en"
+		},
+		{
+			"keys": "GameLogo_pt_png,GameMSG02_pt_png,ClickToPlay_pt_png,LoadingAsset_Text_pt_png,GameMSG01_pt_V_png,GameMSG01_pt_H_png,ProviderInfo_pt_png",
+			"name": "preload_pt"
+		},
+		{
+			"keys": "LoadingBar_BG_png,LoadingBar_png,Intro_ManufacturerBg_png,IntroBG_jpg",
+			"name": "preload_group"
+		},
+		{
+			"keys": "Free_MaxMSG_zh_png,Free_ResultMSG_zh_png,Free_RetriggerMSG_zh_png,Free_SpinMSG_zh_png,Transition_MSG_zh_png,JPText_Major_zh_png,JPText_Grand_zh_png,JPText_Mini_zh_png,JPText_Minor_zh_png,JpMSG_Text_zh_png,LoadingAsset_Text_zh_png,Mini_Icon_WildWin_zh_png,IconText_Minor_zh_png,IconText_Mini_zh_png,IconText_Major_zh_png,IconText_Grand_zh_png,Mini_SelectMSG_zh_png,WinText_Winner_zh_png,WinText_Total_zh_png,WinText_Multiple_zh_png,WinText_Minor_zh_png,WinText_Mini_zh_png,WinText_Major_zh_png,WinText_Grand_zh_png,UiText_Win_zh_png,UiText_TotalBet_zh_png,UiText_Start_zh_png,UiText_Credit_zh_png",
+			"name": "game_zh"
+		},
+		{
+			"keys": "Mini_SelectMSG_en_png,Free_SpinMSG_en_png,Free_MaxMSG_en_png,Free_RetriggerMSG_en_png,Free_ResultMSG_en_png,Transition_MSG_en_png,WinText_Winner_en_png,WinText_Multiple_en_png,WinText_Mini_en_png,WinText_Grand_en_png,WinText_Major_en_png,WinText_Minor_en_png,WinText_Total_en_png,Mini_Icon_WildWin_en_png,IconText_Mini_en_png,IconText_Grand_en_png,IconText_Major_en_png,IconText_Minor_en_png,UiText_TotalBet_en_png,UiText_Start_en_png,UiText_Credit_en_png,UiText_Win_en_png,JpMSG_Text_en_png,JPText_Minor_en_png,JPText_Major_en_png,JPText_Grand_en_png,JPText_Mini_en_png",
+			"name": "game_en"
+		},
+		{
+			"keys": "Mini_SelectMSG_pt_png,Free_SpinMSG_pt_png,Free_MaxMSG_pt_png,Free_RetriggerMSG_pt_png,Free_ResultMSG_pt_png,Transition_MSG_pt_png,WinText_Winner_pt_png,WinText_Multiple_pt_png,WinText_Mini_pt_png,WinText_Grand_pt_png,WinText_Major_pt_png,WinText_Minor_pt_png,WinText_Total_pt_png,Mini_Icon_WildWin_pt_png,IconText_Mini_pt_png,IconText_Grand_pt_png,IconText_Major_pt_png,IconText_Minor_pt_png,UiText_TotalBet_pt_png,UiText_Start_pt_png,UiText_Credit_pt_png,UiText_Win_pt_png,JpMSG_Text_pt_png,JPText_Minor_pt_png,JPText_Major_pt_png,JPText_Grand_pt_png,JPText_Mini_pt_png",
+			"name": "game_pt"
+		},
+		{
+			"keys": "BigWin_SS_png,BigWin_Mask_png,BigWin_SS_json,Base_Reel_png,Symbol_png,Symbol_json,Base_LineRect_png,Base_LineRect_json,Base_LineRect_Symbol1_png,TS_FNT03_png,TS_FNT03_fnt,Base_BG_jpg,CoinSpring_png,CoinSpring_json,Base_SymbolC1_ske_json,Base_SymbolC1_tex_json,Base_SymbolC1_tex_png,Base_SymbolWW_ske_json,Base_SymbolWW_tex_json,Base_SymbolWW_tex_png,Base_ReelFX_SS_png,Base_ReelFX_SS_json,FortuneBall_HitFX_SS_png,FortuneBall_HitFX_SS_json,Reel_Black_png,BaseFrame_png,BallDamping_tex_png,BallDamping_tex_json,BallDamping_ske_json,FortuneBall_FX_ske_json,FortuneBall_FX_tex_json,FortuneBall_FX_tex_png,BigWin_Num_png,BigWin_Num_fnt,BigWin_FX_tex_png,BigWin_FX_tex_json,BigWin_FX_ske_json,FortuneBall_ToMini_ske_json,FortuneBall_ToMini_tex_json,FortuneBall_ToMini_tex_png,ReelSymbol_Num_png,ReelSymbol_Num_fnt,CoinWaterfall_SS_png,CoinWaterfall_SS_json,M5_PowerStack_tex_png,M5_PowerStack_tex_json,M5_PowerStack_ske_json,M5_PowerSingle_tex_png,M5_PowerSingle_tex_json,M5_PowerSingle_ske_json,M5_PowerShowFX_tex_png,M5_PowerShowFX_tex_json,M5_PowerShowFX_ske_json,M4_PowerStack_tex_png,M4_PowerStack_tex_json,M4_PowerStack_ske_json,M4_PowerSingle_tex_png,M4_PowerSingle_tex_json,M4_PowerSingle_ske_json,M4_PowerShowFX_tex_png,M4_PowerShowFX_tex_json,M4_PowerShowFX_ske_json,M1_PowerShowFX_tex_png,M1_PowerSingle_tex_png,M1_PowerStack_tex_png,M2_PowerShowFX_tex_png,M2_PowerSingle_tex_png,M2_PowerStack_tex_png,M3_PowerShowFX_tex_png,M3_PowerSingle_tex_png,M3_PowerStack_tex_png,M1_PowerShowFX_ske_json,M1_PowerShowFX_tex_json,M1_PowerSingle_ske_json,M1_PowerSingle_tex_json,M1_PowerStack_tex_json,M1_PowerStack_ske_json,M2_PowerShowFX_ske_json,M2_PowerShowFX_tex_json,M2_PowerSingle_ske_json,M2_PowerSingle_tex_json,M2_PowerStack_tex_json,M3_PowerShowFX_ske_json,M2_PowerStack_ske_json,M3_PowerSingle_ske_json,M3_PowerShowFX_tex_json,M3_PowerSingle_tex_json,M3_PowerStack_tex_json,M3_PowerStack_ske_json,TopTree_BG_png,FreeGame_Transition_tex_png,FreeGame_Transition_tex_json,FreeGame_Transition_ske_json,JpPool_Minor_png,JpPool_Mini_png,JpPool_Major_png,JpPool_Grand_png,JpMSG_Frame_png,BF_FNT0_512_png,BF_FNT0_512_fnt,JPnotice_Frame_tex_png,JPnotice_Frame_tex_json,JPnotice_Frame_ske_json,PrizePrediction_SS_png,PrizePrediction_SS_json",
+			"name": "game1"
+		},
+		{
+			"keys": "Free_SpinInfoMax_png,Free_SpinInfoBG_png,Free_TitleResult_png,Free_SpinNum_fnt,Free_SpinNum_png,Free_TSNum_fnt,Free_TSNum_png,Base_SymbolC1_ske_json,Base_SymbolC1_tex_json,Base_SymbolC1_tex_png,Base_SymbolWW_ske_json,Base_SymbolWW_tex_json,Base_SymbolWW_tex_png,Base_ReelFX_SS_png,Base_ReelFX_SS_json,FortuneBall_HitFX_SS_png,FortuneBall_HitFX_SS_json,Reel_Black_png,FreeFrame_png,Free_BG_jpg,ReelSymbol_Num_png,ReelSymbol_Num_fnt,TopTree_FG_png,FreeGame_Transition_tex_png,FreeGame_Transition_tex_json,FreeGame_Transition_ske_json,Base_Reel_png,Free_ResultNum_fnt,Free_ResultNum_png,BianLian_CommonAndShowM1_ske_json,BianLian_CommonAndShowM1_tex_json,BianLian_CommonAndShowM1_tex_png,BianLian_Ingot_ske_json,BianLian_Ingot_tex_json,BianLian_Ingot_tex_png,BianLian_M2_ske_json,BianLian_M2_tex_json,BianLian_M2_tex_png,BianLian_M3_ske_json,BianLian_M3_tex_json,BianLian_M3_tex_png,BianLian_M4_ske_json,BianLian_M4_tex_json,BianLian_M4_tex_png,BianLian_M5_ske_json,BianLian_M5_tex_json,BianLian_M5_tex_png,Free_Ingot_tex_png,Free_Ingot_tex_json,Free_Ingot_ske_json",
+			"name": "game2"
+		},
+		{
+			"keys": "Mini_BallGrand_png,Mini_BallMajor_png,Mini_BallMini_png,Mini_BallMinor_png,Mini_BallWild_png,Mini_BG_jpg,Mini_IconCoin_png,Mini_IconGrand_png,Mini_IconMajor_png,Mini_IconMini_png,Mini_IconMinor_png,Mini_IconWild_png,Mini_PoolCollect01_png,Mini_PoolCollect02_png,Mini_WinBoard_png,Mini_WinPlus_png,Mini_DoorBG_png,Mini_DoorMask_H_png,MiniTS_ShowContent_tex_png,MiniTS_ShowContent_tex_json,MiniTS_ShowContent_ske_json,Mini_WinPoolFX_tex_png,Mini_WinPoolFX_tex_json,Mini_WinPoolFX_ske_json,Mini_WinBoardFX_tex_png,Mini_WinBoardFX_tex_json,Mini_WinBoardFX_ske_json,Mini_IconFX_tex_png,Mini_IconFX_tex_json,Mini_IconFX_ske_json,Mini_CollectBallFX_tex_png,Mini_CollectBallFX_tex_json,Mini_CollectBallFX_ske_json,Mini_IconCoinSpinFX_SS_json,Mini_IconCoinSpinFX_SS_png,Mini_CoinSpring_png,Mini_CoinSpring_json,Mini_IconCoinWildFX_SS_png,Mini_IconCoinWildFX_SS_json,CountDownFrame_png",
+			"name": "game3"
+		},
+		{
+			"keys": "Free_SpinInfoBG_png,Free_SpinInfoMax_png,QuickMSG_Frame_png,JPnotice_Frame_tex_png,JPnotice_Frame_tex_json,JPnotice_Frame_ske_json,Balance_Frame_FX_png,Ui_AutoBg_png,Ui_Background_png,Ui_BetOptionBg_png,Ui_Frame_png,Ui_SettingBg_png,Ui_SpinArrow_png,Ui_TimeBg_png,UiAuto_Num_fnt,UiAuto_Num_png,UiBBW_Num_fnt,UiBBW_Num_png,UiBtn_json,UiBtn_AutoOption_png,UiBtn_AutoSelect_png,UiBtn_BetOption_png,UiBtn_BetSelect_png,UiBtn_Raise_png,UiBtn_Start_png,UiSN_Num_fnt,UiSN_Num_png,UiText_Credit_en_png,UiText_Credit_zh_png,UiText_Start_en_png,UiText_Start_zh_png,UiText_TotalBet_en_png,UiText_TotalBet_zh_png,UiText_Win_en_png,UiText_Win_zh_png,UiIcon_Turbo_png,UiIcon_Normal_png,NEW_png,UiIcon_Quick_png",
+			"name": "control-panel"
+		},
+		{
+			"keys": "ProviderInfo_ko_png,GameMSG01_ko_V_png,GameMSG02_ko_png,GameLogo_ko_png,ClickToPlay_ko_png,GameMSG01_ko_H_png",
+			"name": "preload_ko"
+		},
+		{
+			"keys": "ProviderInfo_es_png,GameMSG02_es_png,GameMSG01_es_V_png,GameLogo_es_png,ClickToPlay_es_png,GameMSG01_es_H_png",
+			"name": "preload_es"
+		},
+		{
+			"keys": "UiText_Win_ko_png,UiText_TotalBet_ko_png,UiText_Start_ko_png,UiText_Credit_ko_png,WinText_Winner_ko_png,WinText_Total_ko_png,WinText_Multiple_ko_png,WinText_Minor_ko_png,WinText_Mini_ko_png,WinText_Major_ko_png,WinText_Grand_ko_png,Mini_SelectMSG_ko_png,IconText_Minor_ko_png,Mini_Icon_WildWin_ko_png,IconText_Major_ko_png,IconText_Mini_ko_png,IconText_Grand_ko_png,LoadingAsset_Text_ko_png,JPText_Minor_ko_png,JPText_Mini_ko_png,JPText_Major_ko_png,JPText_Grand_ko_png,JpMSG_Text_ko_png,Transition_MSG_ko_png,Free_RetriggerMSG_ko_png,Free_SpinMSG_ko_png,Free_MaxMSG_ko_png,Free_ResultMSG_ko_png",
+			"name": "game_ko"
+		},
+		{
+			"keys": "UiText_Win_es_png,UiText_TotalBet_es_png,UiText_Start_es_png,UiText_Credit_es_png,WinText_Winner_es_png,WinText_Total_es_png,WinText_Multiple_es_png,WinText_Minor_es_png,WinText_Mini_es_png,WinText_Major_es_png,WinText_Grand_es_png,Mini_Icon_WildWin_es_png,Mini_SelectMSG_es_png,IconText_Minor_es_png,IconText_Mini_es_png,IconText_Grand_es_png,IconText_Major_es_png,LoadingAsset_Text_es_png,JPText_Minor_es_png,JPText_Mini_es_png,JPText_Grand_es_png,JpMSG_Text_es_png,JPText_Major_es_png,Transition_MSG_es_png,Free_SpinMSG_es_png,Free_MaxMSG_es_png,Free_RetriggerMSG_es_png,Free_ResultMSG_es_png",
+			"name": "game_es"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/Common/WinBoard/BigWin_Mask.png",
+			"type": "image",
+			"name": "BigWin_Mask_png"
+		},
+		{
+			"url": "assets/Common/WinBoard/BigWin_SS.png",
+			"type": "image",
+			"name": "BigWin_SS_png"
+		},
+		{
+			"url": "assets/Common/WinBoard/BigWin_SS.json",
+			"type": "json",
+			"name": "BigWin_SS_json"
+		},
+		{
+			"url": "assets/Common/WinBoard/CoinSpring/CoinSpring.png",
+			"type": "image",
+			"name": "CoinSpring_png"
+		},
+		{
+			"url": "assets/Common/WinBoard/CoinSpring/CoinSpring.json",
+			"type": "json",
+			"name": "CoinSpring_json"
+		},
+		{
+			"url": "assets/Common/Effects/Base_ReelFX_SS.png",
+			"type": "image",
+			"name": "Base_ReelFX_SS_png"
+		},
+		{
+			"url": "assets/Common/Effects/Base_ReelFX_SS.json",
+			"type": "json",
+			"name": "Base_ReelFX_SS_json"
+		},
+		{
+			"url": "assets/Common/Effects/FortuneBall_HitFX_SS.png",
+			"type": "image",
+			"name": "FortuneBall_HitFX_SS_png"
+		},
+		{
+			"url": "assets/Common/Effects/FortuneBall_HitFX_SS.json",
+			"type": "json",
+			"name": "FortuneBall_HitFX_SS_json"
+		},
+		{
+			"url": "assets/Common/Reel_Black.png",
+			"type": "image",
+			"name": "Reel_Black_png"
+		},
+		{
+			"url": "assets/PreLoad/GameLogo_en.png",
+			"type": "image",
+			"name": "GameLogo_en_png"
+		},
+		{
+			"url": "assets/PreLoad/LoadingBar.png",
+			"type": "image",
+			"name": "LoadingBar_png"
+		},
+		{
+			"url": "assets/PreLoad/LoadingBar_BG.png",
+			"type": "image",
+			"name": "LoadingBar_BG_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_BG.jpg",
+			"type": "image",
+			"name": "Mini_BG_jpg"
+		},
+		{
+			"url": "assets/MiniGame/Mini_BallGrand.png",
+			"type": "image",
+			"name": "Mini_BallGrand_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_BallMajor.png",
+			"type": "image",
+			"name": "Mini_BallMajor_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_BallMini.png",
+			"type": "image",
+			"name": "Mini_BallMini_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_BallMinor.png",
+			"type": "image",
+			"name": "Mini_BallMinor_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_BallWild.png",
+			"type": "image",
+			"name": "Mini_BallWild_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconCoin.png",
+			"type": "image",
+			"name": "Mini_IconCoin_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconGrand.png",
+			"type": "image",
+			"name": "Mini_IconGrand_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconMajor.png",
+			"type": "image",
+			"name": "Mini_IconMajor_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconMini.png",
+			"type": "image",
+			"name": "Mini_IconMini_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconMinor.png",
+			"type": "image",
+			"name": "Mini_IconMinor_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconWild.png",
+			"type": "image",
+			"name": "Mini_IconWild_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_PoolCollect01.png",
+			"type": "image",
+			"name": "Mini_PoolCollect01_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_PoolCollect02.png",
+			"type": "image",
+			"name": "Mini_PoolCollect02_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_SelectMSG_en.png",
+			"type": "image",
+			"name": "Mini_SelectMSG_en_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_WinBoard.png",
+			"type": "image",
+			"name": "Mini_WinBoard_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_WinPlus.png",
+			"type": "image",
+			"name": "Mini_WinPlus_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_MaxMSG_en.png",
+			"type": "image",
+			"name": "Free_MaxMSG_en_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_ResultMSG_en.png",
+			"type": "image",
+			"name": "Free_ResultMSG_en_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_RetriggerMSG_en.png",
+			"type": "image",
+			"name": "Free_RetriggerMSG_en_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_SpinInfoBG.png",
+			"type": "image",
+			"name": "Free_SpinInfoBG_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_SpinInfoMax.png",
+			"type": "image",
+			"name": "Free_SpinInfoMax_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_SpinMSG_en.png",
+			"type": "image",
+			"name": "Free_SpinMSG_en_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_TitleResult.png",
+			"type": "image",
+			"name": "Free_TitleResult_png"
+		},
+		{
+			"url": "assets/FreeGame/Transition_MSG_en.png",
+			"type": "image",
+			"name": "Transition_MSG_en_png"
+		},
+		{
+			"url": "assets/FreeGame/Font/Free_SpinNum.fnt",
+			"type": "font",
+			"name": "Free_SpinNum_fnt"
+		},
+		{
+			"url": "assets/FreeGame/Font/Free_SpinNum.png",
+			"type": "image",
+			"name": "Free_SpinNum_png"
+		},
+		{
+			"url": "assets/FreeGame/Font/Free_TSNum.fnt",
+			"type": "font",
+			"name": "Free_TSNum_fnt"
+		},
+		{
+			"url": "assets/FreeGame/Font/Free_TSNum.png",
+			"type": "image",
+			"name": "Free_TSNum_png"
+		},
+		{
+			"url": "assets/BaseGame/Base_BG.jpg",
+			"type": "image",
+			"name": "Base_BG_jpg"
+		},
+		{
+			"url": "assets/BaseGame/Base_LineRect.png",
+			"type": "image",
+			"name": "Base_LineRect_png"
+		},
+		{
+			"url": "assets/BaseGame/Base_LineRect_Symbol1.png",
+			"type": "image",
+			"name": "Base_LineRect_Symbol1_png"
+		},
+		{
+			"url": "assets/BaseGame/Base_Reel.png",
+			"type": "image",
+			"name": "Base_Reel_png"
+		},
+		{
+			"url": "assets/BaseGame/Symbol.png",
+			"type": "image",
+			"name": "Symbol_png"
+		},
+		{
+			"url": "assets/BaseGame/TS_FNT03.fnt",
+			"type": "font",
+			"name": "TS_FNT03_fnt"
+		},
+		{
+			"url": "assets/BaseGame/TS_FNT03.png",
+			"type": "image",
+			"name": "TS_FNT03_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_SymbolC1_tex.png",
+			"type": "image",
+			"name": "Base_SymbolC1_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_SymbolWW_tex.png",
+			"type": "image",
+			"name": "Base_SymbolWW_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/Base_LineRect.json",
+			"type": "json",
+			"name": "Base_LineRect_json"
+		},
+		{
+			"url": "assets/BaseGame/Symbol.json",
+			"type": "json",
+			"name": "Symbol_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_SymbolC1_ske.json",
+			"type": "json",
+			"name": "Base_SymbolC1_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_SymbolC1_tex.json",
+			"type": "json",
+			"name": "Base_SymbolC1_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_SymbolWW_tex.json",
+			"type": "json",
+			"name": "Base_SymbolWW_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_SymbolWW_ske.json",
+			"type": "json",
+			"name": "Base_SymbolWW_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/BaseFrame.png",
+			"type": "image",
+			"name": "BaseFrame_png"
+		},
+		{
+			"url": "assets/FreeGame/FreeFrame.png",
+			"type": "image",
+			"name": "FreeFrame_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_BG.jpg",
+			"type": "image",
+			"name": "Free_BG_jpg"
+		},
+		{
+			"url": "assets/MiniGame/Mini_DoorBG.png",
+			"type": "image",
+			"name": "Mini_DoorBG_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_DoorMask_H.png",
+			"type": "image",
+			"name": "Mini_DoorMask_H_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG02_en.png",
+			"type": "image",
+			"name": "GameMSG02_en_png"
+		},
+		{
+			"url": "assets/Common/Effects/DragonBones/BallDamping_tex.png",
+			"type": "image",
+			"name": "BallDamping_tex_png"
+		},
+		{
+			"url": "assets/Common/Effects/DragonBones/FortuneBall_FX_tex.png",
+			"type": "image",
+			"name": "FortuneBall_FX_tex_png"
+		},
+		{
+			"url": "assets/Common/Effects/DragonBones/BallDamping_ske.json",
+			"type": "json",
+			"name": "BallDamping_ske_json"
+		},
+		{
+			"url": "assets/Common/Effects/DragonBones/BallDamping_tex.json",
+			"type": "json",
+			"name": "BallDamping_tex_json"
+		},
+		{
+			"url": "assets/Common/Effects/DragonBones/FortuneBall_FX_ske.json",
+			"type": "json",
+			"name": "FortuneBall_FX_ske_json"
+		},
+		{
+			"url": "assets/Common/Effects/DragonBones/FortuneBall_FX_tex.json",
+			"type": "json",
+			"name": "FortuneBall_FX_tex_json"
+		},
+		{
+			"url": "assets/Common/WinBoard/DragonBones/BigWin_FX_tex.png",
+			"type": "image",
+			"name": "BigWin_FX_tex_png"
+		},
+		{
+			"url": "assets/Common/WinBoard/Font/BigWin_Num.fnt",
+			"type": "font",
+			"name": "BigWin_Num_fnt"
+		},
+		{
+			"url": "assets/Common/WinBoard/Font/BigWin_Num.png",
+			"type": "image",
+			"name": "BigWin_Num_png"
+		},
+		{
+			"url": "assets/Common/WinBoard/DragonBones/BigWin_FX_ske.json",
+			"type": "json",
+			"name": "BigWin_FX_ske_json"
+		},
+		{
+			"url": "assets/Common/WinBoard/DragonBones/BigWin_FX_tex.json",
+			"type": "json",
+			"name": "BigWin_FX_tex_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/FortuneBall_ToMini_tex.png",
+			"type": "image",
+			"name": "FortuneBall_ToMini_tex_png"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/MiniTS_ShowContent_tex.png",
+			"type": "image",
+			"name": "MiniTS_ShowContent_tex_png"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_CollectBallFX_tex.png",
+			"type": "image",
+			"name": "Mini_CollectBallFX_tex_png"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_IconFX_tex.png",
+			"type": "image",
+			"name": "Mini_IconFX_tex_png"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_WinBoardFX_tex.png",
+			"type": "image",
+			"name": "Mini_WinBoardFX_tex_png"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_WinPoolFX_tex.png",
+			"type": "image",
+			"name": "Mini_WinPoolFX_tex_png"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/FortuneBall_ToMini_ske.json",
+			"type": "json",
+			"name": "FortuneBall_ToMini_ske_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/FortuneBall_ToMini_tex.json",
+			"type": "json",
+			"name": "FortuneBall_ToMini_tex_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/MiniTS_ShowContent_tex.json",
+			"type": "json",
+			"name": "MiniTS_ShowContent_tex_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/MiniTS_ShowContent_ske.json",
+			"type": "json",
+			"name": "MiniTS_ShowContent_ske_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_CollectBallFX_ske.json",
+			"type": "json",
+			"name": "Mini_CollectBallFX_ske_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_CollectBallFX_tex.json",
+			"type": "json",
+			"name": "Mini_CollectBallFX_tex_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_IconFX_ske.json",
+			"type": "json",
+			"name": "Mini_IconFX_ske_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_IconFX_tex.json",
+			"type": "json",
+			"name": "Mini_IconFX_tex_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_WinBoardFX_ske.json",
+			"type": "json",
+			"name": "Mini_WinBoardFX_ske_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_WinBoardFX_tex.json",
+			"type": "json",
+			"name": "Mini_WinBoardFX_tex_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_WinPoolFX_ske.json",
+			"type": "json",
+			"name": "Mini_WinPoolFX_ske_json"
+		},
+		{
+			"url": "assets/MiniGame/DragonBones/Mini_WinPoolFX_tex.json",
+			"type": "json",
+			"name": "Mini_WinPoolFX_tex_json"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconCoinSpinFX_SS.png",
+			"type": "image",
+			"name": "Mini_IconCoinSpinFX_SS_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconCoinSpinFX_SS.json",
+			"type": "json",
+			"name": "Mini_IconCoinSpinFX_SS_json"
+		},
+		{
+			"url": "assets/MiniGame/CoinSpring/Mini_CoinSpring.png",
+			"type": "image",
+			"name": "Mini_CoinSpring_png"
+		},
+		{
+			"url": "assets/MiniGame/CoinSpring/Mini_CoinSpring.json",
+			"type": "json",
+			"name": "Mini_CoinSpring_json"
+		},
+		{
+			"url": "assets/PreLoad/Intro_ManufacturerBg.png",
+			"type": "image",
+			"name": "Intro_ManufacturerBg_png"
+		},
+		{
+			"url": "assets/PreLoad/ClickToPlay_en.png",
+			"type": "image",
+			"name": "ClickToPlay_en_png"
+		},
+		{
+			"url": "assets/Common/WinBoard/Font/ReelSymbol_Num.fnt",
+			"type": "font",
+			"name": "ReelSymbol_Num_fnt"
+		},
+		{
+			"url": "assets/Common/WinBoard/Font/ReelSymbol_Num.png",
+			"type": "image",
+			"name": "ReelSymbol_Num_png"
+		},
+		{
+			"url": "assets/MiniGame/CoinWaterfall_SS.png",
+			"type": "image",
+			"name": "CoinWaterfall_SS_png"
+		},
+		{
+			"url": "assets/MiniGame/CoinWaterfall_SS.json",
+			"type": "json",
+			"name": "CoinWaterfall_SS_json"
+		},
+		{
+			"url": "assets/Common/LoadingAsset_Text_en.png",
+			"type": "image",
+			"name": "LoadingAsset_Text_en_png"
+		},
+		{
+			"url": "assets/Common/QuickMSG_Frame.png",
+			"type": "image",
+			"name": "QuickMSG_Frame_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerShowFX_tex.png",
+			"type": "image",
+			"name": "M4_PowerShowFX_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerSingle_tex.png",
+			"type": "image",
+			"name": "M4_PowerSingle_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerStack_tex.png",
+			"type": "image",
+			"name": "M4_PowerStack_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerShowFX_tex.png",
+			"type": "image",
+			"name": "M5_PowerShowFX_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerSingle_tex.png",
+			"type": "image",
+			"name": "M5_PowerSingle_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerStack_tex.png",
+			"type": "image",
+			"name": "M5_PowerStack_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerShowFX_ske.json",
+			"type": "json",
+			"name": "M4_PowerShowFX_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerSingle_ske.json",
+			"type": "json",
+			"name": "M4_PowerSingle_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerStack_ske.json",
+			"type": "json",
+			"name": "M4_PowerStack_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerShowFX_tex.json",
+			"type": "json",
+			"name": "M4_PowerShowFX_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerSingle_tex.json",
+			"type": "json",
+			"name": "M4_PowerSingle_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerShowFX_tex.json",
+			"type": "json",
+			"name": "M5_PowerShowFX_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M4_PowerStack_tex.json",
+			"type": "json",
+			"name": "M4_PowerStack_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerShowFX_ske.json",
+			"type": "json",
+			"name": "M5_PowerShowFX_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerSingle_ske.json",
+			"type": "json",
+			"name": "M5_PowerSingle_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerSingle_tex.json",
+			"type": "json",
+			"name": "M5_PowerSingle_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerStack_ske.json",
+			"type": "json",
+			"name": "M5_PowerStack_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M5_PowerStack_tex.json",
+			"type": "json",
+			"name": "M5_PowerStack_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerShowFX_tex.png",
+			"type": "image",
+			"name": "M1_PowerShowFX_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerSingle_tex.png",
+			"type": "image",
+			"name": "M1_PowerSingle_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerStack_tex.png",
+			"type": "image",
+			"name": "M1_PowerStack_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerShowFX_tex.png",
+			"type": "image",
+			"name": "M2_PowerShowFX_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerSingle_tex.png",
+			"type": "image",
+			"name": "M2_PowerSingle_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerStack_tex.png",
+			"type": "image",
+			"name": "M2_PowerStack_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerShowFX_tex.png",
+			"type": "image",
+			"name": "M3_PowerShowFX_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerSingle_tex.png",
+			"type": "image",
+			"name": "M3_PowerSingle_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerStack_tex.png",
+			"type": "image",
+			"name": "M3_PowerStack_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerShowFX_ske.json",
+			"type": "json",
+			"name": "M1_PowerShowFX_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerShowFX_tex.json",
+			"type": "json",
+			"name": "M1_PowerShowFX_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerSingle_ske.json",
+			"type": "json",
+			"name": "M1_PowerSingle_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerSingle_tex.json",
+			"type": "json",
+			"name": "M1_PowerSingle_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerStack_tex.json",
+			"type": "json",
+			"name": "M1_PowerStack_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M1_PowerStack_ske.json",
+			"type": "json",
+			"name": "M1_PowerStack_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerShowFX_ske.json",
+			"type": "json",
+			"name": "M2_PowerShowFX_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerShowFX_tex.json",
+			"type": "json",
+			"name": "M2_PowerShowFX_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerSingle_ske.json",
+			"type": "json",
+			"name": "M2_PowerSingle_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerSingle_tex.json",
+			"type": "json",
+			"name": "M2_PowerSingle_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerStack_tex.json",
+			"type": "json",
+			"name": "M2_PowerStack_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerShowFX_ske.json",
+			"type": "json",
+			"name": "M3_PowerShowFX_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M2_PowerStack_ske.json",
+			"type": "json",
+			"name": "M2_PowerStack_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerSingle_ske.json",
+			"type": "json",
+			"name": "M3_PowerSingle_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerShowFX_tex.json",
+			"type": "json",
+			"name": "M3_PowerShowFX_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerSingle_tex.json",
+			"type": "json",
+			"name": "M3_PowerSingle_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerStack_tex.json",
+			"type": "json",
+			"name": "M3_PowerStack_tex_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/M3_PowerStack_ske.json",
+			"type": "json",
+			"name": "M3_PowerStack_ske_json"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconCoinWildFX_SS.png",
+			"type": "image",
+			"name": "Mini_IconCoinWildFX_SS_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_IconCoinWildFX_SS.json",
+			"type": "json",
+			"name": "Mini_IconCoinWildFX_SS_json"
+		},
+		{
+			"url": "assets/Common/DragonBones/JPnotice_Frame_tex.png",
+			"type": "image",
+			"name": "JPnotice_Frame_tex_png"
+		},
+		{
+			"url": "assets/Common/DragonBones/JPnotice_Frame_tex.json",
+			"type": "json",
+			"name": "JPnotice_Frame_tex_json"
+		},
+		{
+			"url": "assets/Common/DragonBones/JPnotice_Frame_ske.json",
+			"type": "json",
+			"name": "JPnotice_Frame_ske_json"
+		},
+		{
+			"url": "assets/Common/Effects/TopTree_BG.png",
+			"type": "image",
+			"name": "TopTree_BG_png"
+		},
+		{
+			"url": "assets/Common/Effects/TopTree_FG.png",
+			"type": "image",
+			"name": "TopTree_FG_png"
+		},
+		{
+			"url": "assets/PreLoad/ClickToPlay_zh.png",
+			"type": "image",
+			"name": "ClickToPlay_zh_png"
+		},
+		{
+			"url": "assets/PreLoad/GameLogo_zh.png",
+			"type": "image",
+			"name": "GameLogo_zh_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_en_H.png",
+			"type": "image",
+			"name": "GameMSG01_en_H_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_en_V.png",
+			"type": "image",
+			"name": "GameMSG01_en_V_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG02_zh.png",
+			"type": "image",
+			"name": "GameMSG02_zh_png"
+		},
+		{
+			"url": "assets/PreLoad/IntroBG.jpg",
+			"type": "image",
+			"name": "IntroBG_jpg"
+		},
+		{
+			"url": "assets/Common/LoadingAsset_Text_zh.png",
+			"type": "image",
+			"name": "LoadingAsset_Text_zh_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/FreeGame_Transition_tex.png",
+			"type": "image",
+			"name": "FreeGame_Transition_tex_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/FreeGame_Transition_tex.json",
+			"type": "json",
+			"name": "FreeGame_Transition_tex_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/FreeGame_Transition_ske.json",
+			"type": "json",
+			"name": "FreeGame_Transition_ske_json"
+		},
+		{
+			"url": "assets/FreeGame/Free_MaxMSG_zh.png",
+			"type": "image",
+			"name": "Free_MaxMSG_zh_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_ResultMSG_zh.png",
+			"type": "image",
+			"name": "Free_ResultMSG_zh_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_RetriggerMSG_zh.png",
+			"type": "image",
+			"name": "Free_RetriggerMSG_zh_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_SpinMSG_zh.png",
+			"type": "image",
+			"name": "Free_SpinMSG_zh_png"
+		},
+		{
+			"url": "assets/FreeGame/Transition_MSG_zh.png",
+			"type": "image",
+			"name": "Transition_MSG_zh_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JpMSG_Frame.png",
+			"type": "image",
+			"name": "JpMSG_Frame_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JpMSG_Text_en.png",
+			"type": "image",
+			"name": "JpMSG_Text_en_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JpMSG_Text_zh.png",
+			"type": "image",
+			"name": "JpMSG_Text_zh_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Num/BF_FNT0_512.fnt",
+			"type": "font",
+			"name": "BF_FNT0_512_fnt"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Num/BF_FNT0_512.png",
+			"type": "image",
+			"name": "BF_FNT0_512_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Grand_en.png",
+			"type": "image",
+			"name": "JPText_Grand_en_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Grand_zh.png",
+			"type": "image",
+			"name": "JPText_Grand_zh_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Major_en.png",
+			"type": "image",
+			"name": "JPText_Major_en_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Major_zh.png",
+			"type": "image",
+			"name": "JPText_Major_zh_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Mini_en.png",
+			"type": "image",
+			"name": "JPText_Mini_en_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Mini_zh.png",
+			"type": "image",
+			"name": "JPText_Mini_zh_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Minor_en.png",
+			"type": "image",
+			"name": "JPText_Minor_en_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Minor_zh.png",
+			"type": "image",
+			"name": "JPText_Minor_zh_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/Pool/JpPool_Grand.png",
+			"type": "image",
+			"name": "JpPool_Grand_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/Pool/JpPool_Major.png",
+			"type": "image",
+			"name": "JpPool_Major_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/Pool/JpPool_Mini.png",
+			"type": "image",
+			"name": "JpPool_Mini_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/Pool/JpPool_Minor.png",
+			"type": "image",
+			"name": "JpPool_Minor_png"
+		},
+		{
+			"url": "assets/Control_Panel/Balance_Frame_FX.png",
+			"type": "image",
+			"name": "Balance_Frame_FX_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn_AutoOption.png",
+			"type": "image",
+			"name": "UiBtn_AutoOption_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn_AutoSelect.png",
+			"type": "image",
+			"name": "UiBtn_AutoSelect_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn_BetOption.png",
+			"type": "image",
+			"name": "UiBtn_BetOption_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn_BetSelect.png",
+			"type": "image",
+			"name": "UiBtn_BetSelect_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn_Raise.png",
+			"type": "image",
+			"name": "UiBtn_Raise_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn_Start.png",
+			"type": "image",
+			"name": "UiBtn_Start_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Credit_en.png",
+			"type": "image",
+			"name": "UiText_Credit_en_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Credit_zh.png",
+			"type": "image",
+			"name": "UiText_Credit_zh_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Start_en.png",
+			"type": "image",
+			"name": "UiText_Start_en_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Start_zh.png",
+			"type": "image",
+			"name": "UiText_Start_zh_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_TotalBet_en.png",
+			"type": "image",
+			"name": "UiText_TotalBet_en_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_TotalBet_zh.png",
+			"type": "image",
+			"name": "UiText_TotalBet_zh_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Win_en.png",
+			"type": "image",
+			"name": "UiText_Win_en_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Win_zh.png",
+			"type": "image",
+			"name": "UiText_Win_zh_png"
+		},
+		{
+			"url": "assets/Control_Panel/Ui_AutoBg.png",
+			"type": "image",
+			"name": "Ui_AutoBg_png"
+		},
+		{
+			"url": "assets/Control_Panel/Ui_Background.png",
+			"type": "image",
+			"name": "Ui_Background_png"
+		},
+		{
+			"url": "assets/Control_Panel/Ui_BetOptionBg.png",
+			"type": "image",
+			"name": "Ui_BetOptionBg_png"
+		},
+		{
+			"url": "assets/Control_Panel/Ui_Frame.png",
+			"type": "image",
+			"name": "Ui_Frame_png"
+		},
+		{
+			"url": "assets/Control_Panel/Ui_SettingBg.png",
+			"type": "image",
+			"name": "Ui_SettingBg_png"
+		},
+		{
+			"url": "assets/Control_Panel/Ui_SpinArrow.png",
+			"type": "image",
+			"name": "Ui_SpinArrow_png"
+		},
+		{
+			"url": "assets/Control_Panel/Ui_TimeBg.png",
+			"type": "image",
+			"name": "Ui_TimeBg_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiAuto_Num/UiAuto_Num.fnt",
+			"type": "font",
+			"name": "UiAuto_Num_fnt"
+		},
+		{
+			"url": "assets/Control_Panel/UiAuto_Num/UiAuto_Num.png",
+			"type": "image",
+			"name": "UiAuto_Num_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBBW_Num/UiBBW_Num.fnt",
+			"type": "font",
+			"name": "UiBBW_Num_fnt"
+		},
+		{
+			"url": "assets/Control_Panel/UiBBW_Num/UiBBW_Num.png",
+			"type": "image",
+			"name": "UiBBW_Num_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiSN_Num/UiSN_Num.fnt",
+			"type": "font",
+			"name": "UiSN_Num_fnt"
+		},
+		{
+			"url": "assets/Control_Panel/UiSN_Num/UiSN_Num.png",
+			"type": "image",
+			"name": "UiSN_Num_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn/UiBtn.json",
+			"type": "sheet",
+			"name": "UiBtn_json",
+			"subkeys": "UiIcon_Auto,UiIcon_AutoStop,UiIcon_Decline,UiIcon_GameRule,UiIcon_History,UiIcon_Info,UiIcon_QuickEnable,UiIcon_QuickStop,UiIcon_Raise,UiIcon_Return,UiIcon_Setting,UiIcon_SoundOff,UiIcon_SoundOn,UiIcon_ToLobby,UiIcon_TotalBetArrow"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Grand_en.png",
+			"type": "image",
+			"name": "IconText_Grand_en_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Grand_zh.png",
+			"type": "image",
+			"name": "IconText_Grand_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Major_en.png",
+			"type": "image",
+			"name": "IconText_Major_en_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Major_zh.png",
+			"type": "image",
+			"name": "IconText_Major_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Mini_en.png",
+			"type": "image",
+			"name": "IconText_Mini_en_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Mini_zh.png",
+			"type": "image",
+			"name": "IconText_Mini_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Minor_en.png",
+			"type": "image",
+			"name": "IconText_Minor_en_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Minor_zh.png",
+			"type": "image",
+			"name": "IconText_Minor_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/Mini_Icon_WildWin_en.png",
+			"type": "image",
+			"name": "Mini_Icon_WildWin_en_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/Mini_Icon_WildWin_zh.png",
+			"type": "image",
+			"name": "Mini_Icon_WildWin_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_SelectMSG_zh.png",
+			"type": "image",
+			"name": "Mini_SelectMSG_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Grand_en.png",
+			"type": "image",
+			"name": "WinText_Grand_en_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Grand_zh.png",
+			"type": "image",
+			"name": "WinText_Grand_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Major_en.png",
+			"type": "image",
+			"name": "WinText_Major_en_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Major_zh.png",
+			"type": "image",
+			"name": "WinText_Major_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Mini_en.png",
+			"type": "image",
+			"name": "WinText_Mini_en_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Mini_zh.png",
+			"type": "image",
+			"name": "WinText_Mini_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Minor_en.png",
+			"type": "image",
+			"name": "WinText_Minor_en_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Minor_zh.png",
+			"type": "image",
+			"name": "WinText_Minor_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Multiple_en.png",
+			"type": "image",
+			"name": "WinText_Multiple_en_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Multiple_zh.png",
+			"type": "image",
+			"name": "WinText_Multiple_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Total_en.png",
+			"type": "image",
+			"name": "WinText_Total_en_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Total_zh.png",
+			"type": "image",
+			"name": "WinText_Total_zh_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Winner_en.png",
+			"type": "image",
+			"name": "WinText_Winner_en_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Winner_zh.png",
+			"type": "image",
+			"name": "WinText_Winner_zh_png"
+		},
+		{
+			"url": "assets/FreeGame/Font/Free_ResultNum.fnt",
+			"type": "font",
+			"name": "Free_ResultNum_fnt"
+		},
+		{
+			"url": "assets/FreeGame/Font/Free_ResultNum.png",
+			"type": "image",
+			"name": "Free_ResultNum_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_RaiseBetFX_tex.png",
+			"type": "image",
+			"name": "Base_RaiseBetFX_tex_png"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_RaiseBetFX_ske.json",
+			"type": "json",
+			"name": "Base_RaiseBetFX_ske_json"
+		},
+		{
+			"url": "assets/BaseGame/DragonBones/Base_RaiseBetFX_tex.json",
+			"type": "json",
+			"name": "Base_RaiseBetFX_tex_json"
+		},
+		{
+			"url": "assets/PreLoad/ProviderInfo_zh.png",
+			"type": "image",
+			"name": "ProviderInfo_zh_png"
+		},
+		{
+			"url": "assets/PreLoad/ProviderInfo_en.png",
+			"type": "image",
+			"name": "ProviderInfo_en_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_zh_H.png",
+			"type": "image",
+			"name": "GameMSG01_zh_H_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_zh_V.png",
+			"type": "image",
+			"name": "GameMSG01_zh_V_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_CommonAndShowM1_tex.png",
+			"type": "image",
+			"name": "BianLian_CommonAndShowM1_tex_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_Ingot_tex.png",
+			"type": "image",
+			"name": "BianLian_Ingot_tex_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M2_tex.png",
+			"type": "image",
+			"name": "BianLian_M2_tex_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M3_tex.png",
+			"type": "image",
+			"name": "BianLian_M3_tex_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M4_tex.png",
+			"type": "image",
+			"name": "BianLian_M4_tex_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M5_tex.png",
+			"type": "image",
+			"name": "BianLian_M5_tex_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_Ingot_tex.json",
+			"type": "json",
+			"name": "BianLian_Ingot_tex_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_CommonAndShowM1_ske.json",
+			"type": "json",
+			"name": "BianLian_CommonAndShowM1_ske_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_CommonAndShowM1_tex.json",
+			"type": "json",
+			"name": "BianLian_CommonAndShowM1_tex_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_Ingot_ske.json",
+			"type": "json",
+			"name": "BianLian_Ingot_ske_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M2_tex.json",
+			"type": "json",
+			"name": "BianLian_M2_tex_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M3_ske.json",
+			"type": "json",
+			"name": "BianLian_M3_ske_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M2_ske.json",
+			"type": "json",
+			"name": "BianLian_M2_ske_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M4_ske.json",
+			"type": "json",
+			"name": "BianLian_M4_ske_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M3_tex.json",
+			"type": "json",
+			"name": "BianLian_M3_tex_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M4_tex.json",
+			"type": "json",
+			"name": "BianLian_M4_tex_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M5_ske.json",
+			"type": "json",
+			"name": "BianLian_M5_ske_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/BianLian_M5_tex.json",
+			"type": "json",
+			"name": "BianLian_M5_tex_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/Free_Ingot_tex.png",
+			"type": "image",
+			"name": "Free_Ingot_tex_png"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/Free_Ingot_ske.json",
+			"type": "json",
+			"name": "Free_Ingot_ske_json"
+		},
+		{
+			"url": "assets/FreeGame/DragonBones/Free_Ingot_tex.json",
+			"type": "json",
+			"name": "Free_Ingot_tex_json"
+		},
+		{
+			"url": "assets/Common/Effects/PrizePrediction_SS.png",
+			"type": "image",
+			"name": "PrizePrediction_SS_png"
+		},
+		{
+			"url": "assets/Common/Effects/PrizePrediction_SS.json",
+			"type": "json",
+			"name": "PrizePrediction_SS_json"
+		},
+		{
+			"url": "assets/PreLoad/ClickToPlay_pt.png",
+			"type": "image",
+			"name": "ClickToPlay_pt_png"
+		},
+		{
+			"url": "assets/PreLoad/GameLogo_pt.png",
+			"type": "image",
+			"name": "GameLogo_pt_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_pt.png",
+			"type": "image",
+			"name": "GameMSG01_pt_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG02_pt.png",
+			"type": "image",
+			"name": "GameMSG02_pt_png"
+		},
+		{
+			"url": "assets/PreLoad/ProviderInfo_pt.png",
+			"type": "image",
+			"name": "ProviderInfo_pt_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_MaxMSG_pt.png",
+			"type": "image",
+			"name": "Free_MaxMSG_pt_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_ResultMSG_pt.png",
+			"type": "image",
+			"name": "Free_ResultMSG_pt_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_RetriggerMSG_pt.png",
+			"type": "image",
+			"name": "Free_RetriggerMSG_pt_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_SpinMSG_pt.png",
+			"type": "image",
+			"name": "Free_SpinMSG_pt_png"
+		},
+		{
+			"url": "assets/FreeGame/Transition_MSG_pt.png",
+			"type": "image",
+			"name": "Transition_MSG_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_SelectMSG_pt.png",
+			"type": "image",
+			"name": "Mini_SelectMSG_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Grand_pt.png",
+			"type": "image",
+			"name": "IconText_Grand_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Major_pt.png",
+			"type": "image",
+			"name": "IconText_Major_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Mini_pt.png",
+			"type": "image",
+			"name": "IconText_Mini_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Minor_pt.png",
+			"type": "image",
+			"name": "IconText_Minor_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/Mini_Icon_WildWin_pt.png",
+			"type": "image",
+			"name": "Mini_Icon_WildWin_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Grand_pt.png",
+			"type": "image",
+			"name": "WinText_Grand_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Major_pt.png",
+			"type": "image",
+			"name": "WinText_Major_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Mini_pt.png",
+			"type": "image",
+			"name": "WinText_Mini_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Minor_pt.png",
+			"type": "image",
+			"name": "WinText_Minor_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Multiple_pt.png",
+			"type": "image",
+			"name": "WinText_Multiple_pt_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Winner_pt.png",
+			"type": "image",
+			"name": "WinText_Winner_pt_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Credit_pt.png",
+			"type": "image",
+			"name": "UiText_Credit_pt_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Start_pt.png",
+			"type": "image",
+			"name": "UiText_Start_pt_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_TotalBet_pt.png",
+			"type": "image",
+			"name": "UiText_TotalBet_pt_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Win_pt.png",
+			"type": "image",
+			"name": "UiText_Win_pt_png"
+		},
+		{
+			"url": "assets/Common/LoadingAsset_Text_pt.png",
+			"type": "image",
+			"name": "LoadingAsset_Text_pt_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JpMSG_Text_pt.png",
+			"type": "image",
+			"name": "JpMSG_Text_pt_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Grand_pt.png",
+			"type": "image",
+			"name": "JPText_Grand_pt_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Major_pt.png",
+			"type": "image",
+			"name": "JPText_Major_pt_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Mini_pt.png",
+			"type": "image",
+			"name": "JPText_Mini_pt_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Minor_pt.png",
+			"type": "image",
+			"name": "JPText_Minor_pt_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_pt_H.png",
+			"type": "image",
+			"name": "GameMSG01_pt_H_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_pt_V.png",
+			"type": "image",
+			"name": "GameMSG01_pt_V_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Total_pt.png",
+			"type": "image",
+			"name": "WinText_Total_pt_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn/UiIcon_Turbo.png",
+			"type": "image",
+			"name": "UiIcon_Turbo_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn/NEW.png",
+			"type": "image",
+			"name": "NEW_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn/UiIcon_Normal.png",
+			"type": "image",
+			"name": "UiIcon_Normal_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiBtn/UiIcon_Quick.png",
+			"type": "image",
+			"name": "UiIcon_Quick_png"
+		},
+		{
+			"url": "assets/MiniGame/CountDownFrame.png",
+			"type": "image",
+			"name": "CountDownFrame_png"
+		},
+		{
+			"url": "assets/PreLoad/ProviderInfo_ko.png",
+			"type": "image",
+			"name": "ProviderInfo_ko_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_ko_V.png",
+			"type": "image",
+			"name": "GameMSG01_ko_V_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG02_ko.png",
+			"type": "image",
+			"name": "GameMSG02_ko_png"
+		},
+		{
+			"url": "assets/PreLoad/GameLogo_ko.png",
+			"type": "image",
+			"name": "GameLogo_ko_png"
+		},
+		{
+			"url": "assets/PreLoad/ClickToPlay_ko.png",
+			"type": "image",
+			"name": "ClickToPlay_ko_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_ko_H.png",
+			"type": "image",
+			"name": "GameMSG01_ko_H_png"
+		},
+		{
+			"url": "assets/PreLoad/ProviderInfo_es.png",
+			"type": "image",
+			"name": "ProviderInfo_es_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG02_es.png",
+			"type": "image",
+			"name": "GameMSG02_es_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_es_V.png",
+			"type": "image",
+			"name": "GameMSG01_es_V_png"
+		},
+		{
+			"url": "assets/PreLoad/GameLogo_es.png",
+			"type": "image",
+			"name": "GameLogo_es_png"
+		},
+		{
+			"url": "assets/PreLoad/ClickToPlay_es.png",
+			"type": "image",
+			"name": "ClickToPlay_es_png"
+		},
+		{
+			"url": "assets/PreLoad/GameMSG01_es_H.png",
+			"type": "image",
+			"name": "GameMSG01_es_H_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Win_ko.png",
+			"type": "image",
+			"name": "UiText_Win_ko_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_TotalBet_ko.png",
+			"type": "image",
+			"name": "UiText_TotalBet_ko_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Start_ko.png",
+			"type": "image",
+			"name": "UiText_Start_ko_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Credit_ko.png",
+			"type": "image",
+			"name": "UiText_Credit_ko_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Win_es.png",
+			"type": "image",
+			"name": "UiText_Win_es_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_TotalBet_es.png",
+			"type": "image",
+			"name": "UiText_TotalBet_es_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Start_es.png",
+			"type": "image",
+			"name": "UiText_Start_es_png"
+		},
+		{
+			"url": "assets/Control_Panel/UiText_Credit_es.png",
+			"type": "image",
+			"name": "UiText_Credit_es_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Winner_es.png",
+			"type": "image",
+			"name": "WinText_Winner_es_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Total_es.png",
+			"type": "image",
+			"name": "WinText_Total_es_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Multiple_es.png",
+			"type": "image",
+			"name": "WinText_Multiple_es_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Minor_es.png",
+			"type": "image",
+			"name": "WinText_Minor_es_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Mini_es.png",
+			"type": "image",
+			"name": "WinText_Mini_es_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Major_es.png",
+			"type": "image",
+			"name": "WinText_Major_es_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Grand_es.png",
+			"type": "image",
+			"name": "WinText_Grand_es_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Winner_ko.png",
+			"type": "image",
+			"name": "WinText_Winner_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Total_ko.png",
+			"type": "image",
+			"name": "WinText_Total_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Multiple_ko.png",
+			"type": "image",
+			"name": "WinText_Multiple_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Minor_ko.png",
+			"type": "image",
+			"name": "WinText_Minor_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Mini_ko.png",
+			"type": "image",
+			"name": "WinText_Mini_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Major_ko.png",
+			"type": "image",
+			"name": "WinText_Major_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/WinText/WinText_Grand_ko.png",
+			"type": "image",
+			"name": "WinText_Grand_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_SelectMSG_ko.png",
+			"type": "image",
+			"name": "Mini_SelectMSG_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Minor_ko.png",
+			"type": "image",
+			"name": "IconText_Minor_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/Mini_Icon_WildWin_ko.png",
+			"type": "image",
+			"name": "Mini_Icon_WildWin_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Major_ko.png",
+			"type": "image",
+			"name": "IconText_Major_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Mini_ko.png",
+			"type": "image",
+			"name": "IconText_Mini_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Grand_ko.png",
+			"type": "image",
+			"name": "IconText_Grand_ko_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/Mini_Icon_WildWin_es.png",
+			"type": "image",
+			"name": "Mini_Icon_WildWin_es_png"
+		},
+		{
+			"url": "assets/MiniGame/Mini_SelectMSG_es.png",
+			"type": "image",
+			"name": "Mini_SelectMSG_es_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Minor_es.png",
+			"type": "image",
+			"name": "IconText_Minor_es_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Mini_es.png",
+			"type": "image",
+			"name": "IconText_Mini_es_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Grand_es.png",
+			"type": "image",
+			"name": "IconText_Grand_es_png"
+		},
+		{
+			"url": "assets/MiniGame/IconText/IconText_Major_es.png",
+			"type": "image",
+			"name": "IconText_Major_es_png"
+		},
+		{
+			"url": "assets/Common/LoadingAsset_Text_ko.png",
+			"type": "image",
+			"name": "LoadingAsset_Text_ko_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Minor_ko.png",
+			"type": "image",
+			"name": "JPText_Minor_ko_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Mini_ko.png",
+			"type": "image",
+			"name": "JPText_Mini_ko_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Major_ko.png",
+			"type": "image",
+			"name": "JPText_Major_ko_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Grand_ko.png",
+			"type": "image",
+			"name": "JPText_Grand_ko_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JpMSG_Text_ko.png",
+			"type": "image",
+			"name": "JpMSG_Text_ko_png"
+		},
+		{
+			"url": "assets/Common/LoadingAsset_Text_es.png",
+			"type": "image",
+			"name": "LoadingAsset_Text_es_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Minor_es.png",
+			"type": "image",
+			"name": "JPText_Minor_es_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Mini_es.png",
+			"type": "image",
+			"name": "JPText_Mini_es_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Grand_es.png",
+			"type": "image",
+			"name": "JPText_Grand_es_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JpMSG_Text_es.png",
+			"type": "image",
+			"name": "JpMSG_Text_es_png"
+		},
+		{
+			"url": "assets/Common/Jackpot/JP_Text/JPText_Major_es.png",
+			"type": "image",
+			"name": "JPText_Major_es_png"
+		},
+		{
+			"url": "assets/FreeGame/Transition_MSG_ko.png",
+			"type": "image",
+			"name": "Transition_MSG_ko_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_RetriggerMSG_ko.png",
+			"type": "image",
+			"name": "Free_RetriggerMSG_ko_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_SpinMSG_ko.png",
+			"type": "image",
+			"name": "Free_SpinMSG_ko_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_MaxMSG_ko.png",
+			"type": "image",
+			"name": "Free_MaxMSG_ko_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_ResultMSG_ko.png",
+			"type": "image",
+			"name": "Free_ResultMSG_ko_png"
+		},
+		{
+			"url": "assets/FreeGame/Transition_MSG_es.png",
+			"type": "image",
+			"name": "Transition_MSG_es_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_SpinMSG_es.png",
+			"type": "image",
+			"name": "Free_SpinMSG_es_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_MaxMSG_es.png",
+			"type": "image",
+			"name": "Free_MaxMSG_es_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_RetriggerMSG_es.png",
+			"type": "image",
+			"name": "Free_RetriggerMSG_es_png"
+		},
+		{
+			"url": "assets/FreeGame/Free_ResultMSG_es.png",
+			"type": "image",
+			"name": "Free_ResultMSG_es_png"
+		}
+	]
+}

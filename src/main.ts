@@ -1,225 +1,215 @@
 /**
- * Power Fortune 財神報喜 — 主入口
- * 全部使用靜態 import，避免 Vite code-splitting TDZ 問題
+ * Power Fortune 財神報喜 — 主入口（視覺層整合版）
+ *
+ * 啟動流程：
+ *   1. 建立 PixiJS Application (900×1600)，掛載 canvas
+ *   2. 設定響應式 Letterbox 縮放
+ *   3. 建立 LoadingScene，加入 stage
+ *   4. 建立 AssetPipeline，onProgress → LoadingScene.setProgress
+ *   5. await pipeline.load()（全資源載入）
+ *   6. 解析符號：symbolManager.loadSymbols()
+ *   7. 移除 LoadingScene
+ *   8. 建立 BaseGameScene(app)，await init()，加入 stage
+ *   9. 全程 try/catch — 錯誤顯示在畫面上
+ *
+ * PixiJS v8 要點：
+ *   - new Application() + await app.init({...})（兩步驟初始化）
+ *   - app.canvas（不是 app.view）
+ *   - app.ticker.add((ticker) => { ... })
  */
-import { Application, Graphics, Text, TextStyle, Container } from 'pixi.js';
-import { GameController } from './core/GameController';
-import { PAY_TABLE } from './evaluation/PayTable';
+
+import { Application, Text, TextStyle } from 'pixi.js';
+import { AssetPipeline } from '@/assets/AssetPipeline';
+import { AssetStore } from '@/assets/AssetStore';
+import { symbolManager } from '@/reel/SymbolManager';
+import { LoadingScene } from '@/scenes/LoadingScene';
+import { BaseGameScene } from '@/scenes/BaseGameScene';
+import type { EgretMCData } from '@/reel/SymbolManager';
+
+// ─────────────────────── 版面常數 ───────────────────────
+
+const GAME_W = 900;
+const GAME_H = 1600;
+
+// ─────────────────────── 主要啟動函式 ───────────────────────
 
 async function bootstrap(): Promise<void> {
-  const statusEl = document.getElementById('status');
-  function log(msg: string): void {
-    if (statusEl) statusEl.textContent = msg;
-    if (import.meta.env.DEV) console.log(msg);
+  // ── 步驟 1：建立 PixiJS Application ──────────────────────────
+  const app = new Application();
+  await app.init({
+    width:           GAME_W,
+    height:          GAME_H,
+    backgroundColor: 0x1a0a2e,
+    antialias:       true,
+    resolution:      window.devicePixelRatio || 1,
+    autoDensity:     true,
+  });
+
+  // ── 步驟 2：掛載 canvas 並設定 Letterbox 縮放 ──────────────────
+  document.body.appendChild(app.canvas);
+  setupLetterbox(app.canvas as HTMLCanvasElement);
+
+  // ── 步驟 3：建立並顯示 LoadingScene ──────────────────────────
+  const loadingScene = new LoadingScene();
+  app.stage.addChild(loadingScene);
+
+  // 非阻塞地初始化 LoadingScene 自身資源（Logo + 進度列圖片）
+  // 先讓進度列的 init 開始跑，同時啟動 pipeline
+  const loadingInitPromise = loadingScene.init();
+
+  // ── 步驟 4：建立 AssetPipeline，回呼驅動 LoadingScene ─────────
+  const pipeline = new AssetPipeline({
+    locale: 'en',
+    onProgress: (stage: string, progress: number) => {
+      // 將各階段進度映射至 LoadingScene 的 setProgress
+      // preload=0~20%，game1=20~60%，control-panel=60~75%，
+      // game2=75~88%，game3=88~99%，complete=100%
+      const stageWeights: Record<string, [number, number]> = {
+        preload:         [0.00, 0.20],
+        game1:           [0.20, 0.60],
+        'control-panel': [0.60, 0.75],
+        game2:           [0.75, 0.88],
+        game3:           [0.88, 0.99],
+        complete:        [0.99, 1.00],
+      };
+
+      const range = stageWeights[stage] ?? [0, 1];
+      const globalProgress = range[0] + (range[1] - range[0]) * progress;
+      loadingScene.setProgress(stage, globalProgress);
+    },
+  });
+
+  // 等待 LoadingScene 本身初始化完成後再開始大量資源載入
+  // （避免 LoadingScene 的進度條圖片因管線佔用頻寬而延遲顯示）
+  await loadingInitPromise;
+
+  // ── 步驟 5：執行完整資源載入流程 ─────────────────────────────
+  const store: AssetStore = await pipeline.load();
+
+  // ── 步驟 6：解析符號貼圖（Symbol.png + Symbol.json） ─────────
+  // AssetPipeline 在 game1 階段已將 Symbol_png + Symbol_json 載入 AssetStore
+  // 但 SymbolManager 需要在此獨立解析以建立 id→Texture 映射
+  try {
+    const symbolTex  = store.getTexture('Symbol_png');
+    const symbolJson = store.getJsonAs<EgretMCData>('Symbol_json');
+    symbolManager.loadSymbols(symbolTex, symbolJson);
+    console.log('[main] 符號貼圖解析完成');
+  } catch (err) {
+    // 符號資源缺失時啟動降級模式（純色色塊）
+    console.warn('[main] Symbol 資源解析失敗，使用備用貼圖：', err);
+    symbolManager.loadFallbacks();
   }
 
-  try {
-    log('Initializing...');
+  // ── 步驟 7：移除 LoadingScene ─────────────────────────────────
+  loadingScene.setProgress('complete', 1.0);
+  // 短暫停頓讓玩家看到 100%
+  await delay(300);
+  app.stage.removeChild(loadingScene);
+  loadingScene.destroy();
 
-    const app = new Application();
-    await app.init({
-      width: 900,
-      height: 1600,
-      backgroundColor: 0x1a0a2e,
-      antialias: true,
-    });
+  // ── 步驟 8：建立並顯示 BaseGameScene ──────────────────────────
+  const gameScene = new BaseGameScene(app);
+  app.stage.addChild(gameScene);
+  await gameScene.init();
 
-    document.body.appendChild(app.canvas);
+  console.log('[PowerFortune] 遊戲就緒！');
+}
 
-    // 響應式縮放
-    function resize(): void {
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const ratio = 900 / 1600;
-      const vr = vw / vh;
-      const w = vr > ratio ? vh * ratio : vw;
-      const h = vr > ratio ? vh : vw / ratio;
-      app.canvas.style.width = `${w}px`;
-      app.canvas.style.height = `${h}px`;
-    }
-    window.addEventListener('resize', resize);
-    resize();
+// ─────────────────────── 工具函式 ───────────────────────
 
-    const W = 900;
-    const ctrl = new GameController({
-      initialBalance: 50000,
-      betOptions: [10, 20, 50, 100, 200, 500],
-      defaultBetIndex: 3,
-    });
+/**
+ * 設定 Letterbox 響應式縮放
+ *
+ * 保持 900:1600 比例置中顯示，
+ * 可用寬度不足時以高度為準，反之以寬度為準。
+ *
+ * @param canvas - PixiJS app.canvas（HTMLCanvasElement）
+ */
+function setupLetterbox(canvas: HTMLCanvasElement): void {
+  // 套用 CSS 使 canvas 置中
+  canvas.style.position = 'absolute';
+  canvas.style.left     = '50%';
+  canvas.style.top      = '50%';
+  canvas.style.transform = 'translate(-50%, -50%)';
 
-    // === 標題 ===
-    const title = new Text({
-      text: 'POWER FORTUNE',
-      style: new TextStyle({ fontFamily: 'Arial', fontSize: 42, fill: 0xffcc00, fontWeight: 'bold' }),
-    });
-    title.anchor.set(0.5);
-    title.x = W / 2;
-    title.y = 60;
-    app.stage.addChild(title);
+  function resize(): void {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const gameRatio = GAME_W / GAME_H;
+    const viewRatio = vw / vh;
 
-    const sub = new Text({
-      text: '財神報喜 — 1024 Ways to Win',
-      style: new TextStyle({ fontFamily: 'Arial', fontSize: 20, fill: 0xaaaaaa }),
-    });
-    sub.anchor.set(0.5);
-    sub.x = W / 2;
-    sub.y = 110;
-    app.stage.addChild(sub);
+    let w: number;
+    let h: number;
 
-    // === 5×4 格線 ===
-    const COLS = 5, ROWS = 4, CW = 150, CH = 150;
-    const GX = (W - COLS * CW) / 2, GY = 250;
-    const COLORS = [
-      0xff4444, 0xffaa00, 0xff6600, 0xcc3333, 0x8b4513,
-      0x4488ff, 0x44aaff, 0x44ccaa, 0x66cc66, 0x888888,
-      0x666666, 0xddaa00, 0xff00ff, 0x00ff00, 0xffff00,
-    ];
-
-    const reelBg = new Graphics().rect(GX - 10, GY - 10, COLS * CW + 20, ROWS * CH + 20).fill(0x0d0520);
-    app.stage.addChild(reelBg);
-
-    const cells: { g: Graphics; t: Text }[][] = [];
-    for (let c = 0; c < COLS; c++) {
-      cells[c] = [];
-      for (let r = 0; r < ROWS; r++) {
-        const x = GX + c * CW + 2;
-        const y = GY + r * CH + 2;
-        const g = new Graphics().roundRect(x, y, CW - 4, CH - 4, 8).fill(0x333333);
-        app.stage.addChild(g);
-        const t = new Text({
-          text: '?',
-          style: new TextStyle({ fontFamily: 'Arial', fontSize: 20, fill: 0xffffff, fontWeight: 'bold' }),
-        });
-        t.anchor.set(0.5);
-        t.x = x + (CW - 4) / 2;
-        t.y = y + (CH - 4) / 2;
-        app.stage.addChild(t);
-        cells[c][r] = { g, t };
-      }
+    if (viewRatio > gameRatio) {
+      // 視口較寬：以高度為基準
+      h = vh;
+      w = vh * gameRatio;
+    } else {
+      // 視口較高或等比：以寬度為基準
+      w = vw;
+      h = vw / gameRatio;
     }
 
-    // === 控制面板 ===
-    const panelY = GY + ROWS * CH + 40;
+    canvas.style.width  = `${w}px`;
+    canvas.style.height = `${h}px`;
+  }
 
-    const balText = new Text({
-      text: `BALANCE: ${ctrl.balance.toLocaleString()}`,
-      style: new TextStyle({ fontFamily: 'Arial', fontSize: 26, fill: 0xffffff }),
+  window.addEventListener('resize', resize);
+  resize();
+}
+
+/**
+ * 非同步延遲工具（避免 setTimeout 直接用在 async/await 中）
+ * @param ms 毫秒數
+ */
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * 顯示致命錯誤到畫面（讓使用者看到錯誤而非空白頁）
+ *
+ * @param app - PixiJS Application（可能尚未初始化）
+ * @param err - 錯誤物件
+ */
+function showFatalError(app: Application | null, err: unknown): void {
+  const msg = err instanceof Error
+    ? (err.stack ?? err.message)
+    : String(err);
+
+  console.error('[PowerFortune] 致命錯誤：', msg);
+
+  // 若 app 已初始化，在 stage 顯示錯誤訊息
+  if (app && app.stage) {
+    const errText = new Text({
+      text: `ERROR:\n${msg}`,
+      style: new TextStyle({
+        fontFamily: 'monospace',
+        fontSize: 18,
+        fill: 0xff4444,
+        wordWrap: true,
+        wordWrapWidth: GAME_W - 40,
+      }),
     });
-    balText.x = 50; balText.y = panelY;
-    app.stage.addChild(balText);
+    errText.x = 20;
+    errText.y = 20;
+    app.stage.addChild(errText);
+  }
 
-    const betText = new Text({
-      text: `BET: ${ctrl.currentBet}`,
-      style: new TextStyle({ fontFamily: 'Arial', fontSize: 26, fill: 0xffffff }),
-    });
-    betText.x = 400; betText.y = panelY;
-    app.stage.addChild(betText);
-
-    const winText = new Text({
-      text: '',
-      style: new TextStyle({ fontFamily: 'Arial', fontSize: 48, fill: 0xffdd00, fontWeight: 'bold' }),
-    });
-    winText.anchor.set(0.5);
-    winText.x = W / 2; winText.y = GY - 50;
-    app.stage.addChild(winText);
-
-    const msgText = new Text({
-      text: 'Press SPIN to play!',
-      style: new TextStyle({ fontFamily: 'Arial', fontSize: 22, fill: 0xffcc00 }),
-    });
-    msgText.anchor.set(0.5);
-    msgText.x = W / 2; msgText.y = panelY + 200;
-    app.stage.addChild(msgText);
-
-    // === SPIN 按鈕 ===
-    let spinning = false;
-    const spinBtn = new Container();
-    spinBtn.x = W / 2; spinBtn.y = panelY + 110;
-    spinBtn.eventMode = 'static'; spinBtn.cursor = 'pointer';
-    const btnBg = new Graphics().circle(0, 0, 60).fill(0x00cc44);
-    spinBtn.addChild(btnBg);
-    const btnTxt = new Text({
-      text: 'SPIN',
-      style: new TextStyle({ fontFamily: 'Arial', fontSize: 28, fill: 0xffffff, fontWeight: 'bold' }),
-    });
-    btnTxt.anchor.set(0.5);
-    spinBtn.addChild(btnTxt);
-    app.stage.addChild(spinBtn);
-
-    // === BET +/- ===
-    function makeBetBtn(label: string, bx: number): Container {
-      const c = new Container();
-      c.x = bx; c.y = panelY;
-      c.eventMode = 'static'; c.cursor = 'pointer';
-      c.addChild(new Graphics().roundRect(-18, -2, 36, 36, 6).fill(0x555555));
-      const tx = new Text({
-        text: label,
-        style: new TextStyle({ fontFamily: 'Arial', fontSize: 26, fill: 0xffffff }),
-      });
-      tx.anchor.set(0.5); tx.y = 15;
-      c.addChild(tx);
-      app.stage.addChild(c);
-      return c;
-    }
-    makeBetBtn('-', 360).on('pointerdown', () => {
-      if (!spinning) { ctrl.decreaseBet(); betText.text = `BET: ${ctrl.currentBet}`; }
-    });
-    makeBetBtn('+', 560).on('pointerdown', () => {
-      if (!spinning) { ctrl.increaseBet(); betText.text = `BET: ${ctrl.currentBet}`; }
-    });
-
-    // === SPIN 邏輯 ===
-    spinBtn.on('pointerdown', () => {
-      if (spinning) return;
-      spinning = true;
-      winText.text = '';
-      msgText.text = 'Spinning...';
-      btnBg.clear().circle(0, 0, 60).fill(0x666666);
-
-      setTimeout(() => {
-        const result = ctrl.spin();
-        if (result) {
-          for (let c = 0; c < COLS; c++) {
-            for (let r = 0; r < ROWS; r++) {
-              const symId = result.gridResult.grid[c][r];
-              const color = COLORS[symId] ?? 0x333333;
-              const name = PAY_TABLE[symId]?.name ?? '?';
-              const x = GX + c * CW + 2, y = GY + r * CH + 2;
-              cells[c][r].g.clear().roundRect(x, y, CW - 4, CH - 4, 8).fill(color);
-              cells[c][r].t.text = name;
-            }
-          }
-          if (result.totalWin > 0) {
-            winText.text = `WIN: ${result.totalWin.toLocaleString()}`;
-            msgText.text = `${result.wins.length} winning way(s)!`;
-          } else {
-            winText.text = '';
-            msgText.text = 'No win. Try again!';
-          }
-          if (result.triggerFreeGame) {
-            msgText.text = `FREE GAME! (${result.scatterCount} Scatters)`;
-          }
-        } else {
-          msgText.text = 'Insufficient balance!';
-        }
-        balText.text = `BALANCE: ${ctrl.balance.toLocaleString()}`;
-        spinning = false;
-        btnBg.clear().circle(0, 0, 60).fill(0x00cc44);
-      }, 400);
-    });
-
-    // 成功 → 隱藏 status
-    if (statusEl) statusEl.style.display = 'none';
-    if (import.meta.env.DEV) console.log('[PowerFortune] Game ready!');
-
-  } catch (err) {
-    const msg = err instanceof Error ? err.stack ?? err.message : String(err);
-    console.error('[PowerFortune]', msg);
-    if (statusEl) {
-      statusEl.style.color = '#ff4444';
-      statusEl.textContent = `ERROR: ${msg}`;
-    }
+  // 同時更新 HTML status 元素（若存在）
+  const statusEl = document.getElementById('status');
+  if (statusEl) {
+    statusEl.style.color   = '#ff4444';
+    statusEl.textContent   = `ERROR: ${msg}`;
+    statusEl.style.display = 'block';
   }
 }
 
-bootstrap();
+// ─────────────────────── 啟動 ───────────────────────
+
+// 頂層啟動：bootstrap 在自己內部管理 Application 實例
+// 錯誤發生時嘗試顯示到 DOM（app 可能尚未建立，所以傳 null）
+bootstrap().catch((err: unknown) => {
+  showFatalError(null, err);
+});
