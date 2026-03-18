@@ -16,26 +16,39 @@
       align-items: center;
     }
     canvas { display: block; }
-    #error-display {
+    #status {
       position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #ff4444;
-      background: rgba(0,0,0,0.9);
-      padding: 12px 24px;
-      border: 1px solid #ff4444;
-      border-radius: 8px;
+      top: 10px;
+      left: 10px;
+      color: #0f0;
       font-family: monospace;
-      font-size: 14px;
+      font-size: 12px;
       z-index: 9999;
-      max-width: 90%;
+      background: rgba(0,0,0,0.8);
+      padding: 8px;
+      border-radius: 4px;
+      max-width: 90vw;
+      max-height: 80vh;
+      overflow: auto;
       word-wrap: break-word;
+      white-space: pre-wrap;
     }
   </style>
+  <script>
+    window.__log = ['[1] Page loaded'];
+    window.onerror = function(msg, src, line, col) {
+      window.__log.push('ERR: ' + msg + ' @' + src + ':' + line);
+      document.getElementById('status').textContent = window.__log.join('\n');
+    };
+    window.addEventListener('unhandledrejection', function(e) {
+      var reason = e.reason || {};
+      window.__log.push('REJECT: ' + (reason.stack || reason.message || reason));
+      document.getElementById('status').textContent = window.__log.join('\n');
+    });
+  </script>
 </head>
 <body>
-  <div id="error-display">Loading Power Fortune...</div>
+  <div id="status">[0] HTML parsed</div>
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
