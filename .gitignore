@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.local
+.DS_Store
+coverage/
+
+# 原版素材（不上傳，太大）
+power-fortune-assets/
