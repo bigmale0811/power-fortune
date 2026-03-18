@@ -25,6 +25,7 @@
 import {
   Container,
   Sprite,
+  Graphics,
   Application,
   Text,
   TextStyle,
@@ -49,50 +50,57 @@ import { SoundManager } from '@/audio/SoundManager';
 import { globalEventBus } from '@/core/EventBus';
 import type { SpinResult } from '@/core/constants';
 
-// ─────────────────────── 版面常數（1600×2000 設計解析度） ───────────────────────
+// ─────────────────── EXML 精確版面常數（900-wide portrait → 1600-wide canvas） ──────────────────
 
-/** 遊戲畫布寬度（對齊 Base_BG.jpg 原始尺寸） */
+/** 畫布寬度（Base_BG.jpg 原始尺寸 1600×2000） */
 const W = 1600;
 
-// ── 對齊原版佈局比例（符號填滿寬度，消除底部空白） ──
+/**
+ * 內容偏移量：原版直式為 900×2000，嵌入 1600 寬畫布需偏移 (1600-900)/2 = 350
+ * 所有 EXML x 座標 + CX = 1600 空間座標
+ */
+const CX = 350;
 
-/** JackpotBar 高度（原版 GRAND 徽章 + MINOR/MAJOR/MINI 約佔 20%） */
-const JACKPOT_H = 250;
+/** 900 寬內容區中心在 1600 畫布上的 X */
+const CENTER_X = 800;
 
-/** 轉盤區頂部 Y（Jackpot 下方緊接 BaseFrame 裝飾） */
-const REEL_AREA_TOP = 400;
+// ── BaseFrame（金色圓框裝飾）── EXML: horizontalCenter=0, y=384, anchor=(448,358)
+const FRAME_X = CENTER_X - 448;   // 352
+const FRAME_Y = 384 - 358;        // 26
 
-/** 符號格線實際高度 (4行×195px) */
-const GRID_H = 4 * 195; // 780
+// ── FortuneBall 聚寶盆/金樹 ── EXML: horizontalCenter=0, y=519, anchorOffsetY=226, skin 792×452
+const TREE_X = CENTER_X - 396;    // 404 (792/2=396)
+const TREE_Y = 519 - 226;         // 293
 
-/** 轉盤區高度（含符號上下邊距） */
-const REEL_AREA_H = GRID_H + 40; // 820
+// ── ReelView ── EXML: horizontalCenter=0, y=971, anchorOffsetY=368, scale=0.75, native 1202×640
+const REEL_PIVOT_X = 601;         // 1202/2
+const REEL_PIVOT_Y = 368;
+const REEL_SCREEN_Y = 971;
+const REEL_SCALE = 0.75;
 
-/** 轉盤區底部 Y */
-const REEL_AREA_BOTTOM = REEL_AREA_TOP + REEL_AREA_H; // 1220
+// ── JackpotPool ── EXML portrait 座標（預留給 JackpotBar 精確化）
+// Grand: center=800, y=155, anchorOffsetY=62 → top≈93
+// Major: center=800, y=287, anchorOffsetY=54 → top≈233
+// Minor: x=352, y=361 | Mini: x=916, y=361
 
-/** 符號格線寬度 (5col × 280px) */
-const GRID_W = 5 * 280; // 1400
+// ── ControlView 底部面板 ── EXML portrait 座標
+const PANEL_BG_Y = 1212;          // Ui_Background.png y
+const INFO_Y = 1226;              // Balance/Win/Bet 標籤列 y
+const BALANCE_X = CX + 4;         // 354
+const WIN_X = CX + 302;           // 652
+const BET_X = CX + 600;           // 950
 
-/** BaseFrame.png 原始尺寸 */
-const FRAME_W = 896;
-const FRAME_H = 716;
-const FRAME_X = Math.round((W - FRAME_W) / 2); // 352
+// ── 按鈕列 ── EXML portrait 座標
+const SPIN_BTN_Y = 1442;          // spinBtnGp y, anchor=(100,100)
+const TURBO_X = CX + 51;          // 401
+const TURBO_Y = 1396;
+const AUTO_X = CX + 753;          // 1103
+const AUTO_Y = 1396;
+// Plus/Minus bet 按鈕（條件顯示，暫不建立）
+// PLUS_BET: x=988, MINUS_BET: x=610, y=1442
 
-/** BaseFrame 頂部對齊轉盤區上方（金色圓框裝飾在符號上方可見） */
-const FRAME_Y = REEL_AREA_TOP - Math.round((FRAME_H - REEL_AREA_H) / 2); // 348
-
-/** WinDisplay Y（轉盤下方） */
-const WIN_DISPLAY_Y = REEL_AREA_BOTTOM + 20; // 1240
-
-/** 資訊列 Y：Balance / Bet / Win（對齊原版底部面板） */
-const PANEL_Y = WIN_DISPLAY_Y + 100; // 1340
-
-/** SpinButton 中心 Y（大按鈕，對齊原版） */
-const SPIN_BTN_Y = PANEL_Y + 200; // 1540
-
-/** 訊息文字 Y */
-const MSG_Y = SPIN_BTN_Y + 160; // 1700
+/** 訊息文字 Y（面板下方） */
+const MSG_Y = 1560;
 
 // ─────────────────────── BaseGameScene ───────────────────────
 
@@ -162,8 +170,14 @@ export class BaseGameScene extends Container {
 
     // 7. Phase E: 贏分特效（初始化順序：底層 → 頂層）
     // WinHighlight：格線高亮，置於轉盤區上方
-    // WinHighlight 格子對齊 ReelEngine 符號尺寸 (280×195)
-    this._winHighlight = new WinHighlight(0, REEL_AREA_TOP, 280, 195);
+    // WinHighlight 格子對齊 EXML 符號尺寸 (224×148)，縮放 0.75
+    // 轉盤左上角 = (800-601*0.75, 971-368*0.75) = (349, 695)
+    const reelScreenX = CENTER_X - REEL_PIVOT_X * REEL_SCALE;
+    const reelScreenY = REEL_SCREEN_Y - REEL_PIVOT_Y * REEL_SCALE;
+    this._winHighlight = new WinHighlight(
+      reelScreenX, reelScreenY,
+      224 * REEL_SCALE, 148 * REEL_SCALE,
+    );
     this.addChild(this._winHighlight);
 
     // CoinEffect：金幣噴射粒子
@@ -242,48 +256,9 @@ export class BaseGameScene extends Container {
    * 3. Logo 標題區（Y=80~200）
    *    嘗試使用 PreLoad/GameLogo_en.png；失敗則文字 fallback
    */
-  private _buildLogoArea(store: AssetStore): void {
-    // 嘗試使用 GameLogo_en.png（已在 preload 階段載入至 AssetStore）
-    const logoTex = store.tryGetTexture('GameLogo_en_png');
-    if (logoTex) {
-      const logo = new Sprite(logoTex);
-      logo.anchor.set(0.5, 0);
-      const targetW = 500;
-      logo.scale.set(targetW / logo.texture.width);
-      logo.x = W / 2;
-      logo.y = JACKPOT_H + 10;
-      this.addChild(logo);
-    } else {
-      // 文字 fallback
-      const titleText = new Text({
-        text: 'POWER FORTUNE',
-        style: new TextStyle({
-          fontFamily: 'Arial Black',
-          fontSize: 44,
-          fontWeight: 'bold',
-          fill: 0xffd700,
-          dropShadow: { color: 0x884400, blur: 10, distance: 3, angle: Math.PI / 4 },
-          stroke: { color: 0x7a4000, width: 2 },
-        }),
-      });
-      titleText.anchor.set(0.5, 0);
-      titleText.x = W / 2;
-      titleText.y = JACKPOT_H + 16;
-      this.addChild(titleText);
-
-      const subText = new Text({
-        text: '財神報喜 — 1024 Ways to Win',
-        style: new TextStyle({
-          fontFamily: 'Arial',
-          fontSize: 20,
-          fill: 0xaaaaaa,
-        }),
-      });
-      subText.anchor.set(0.5, 0);
-      subText.x = W / 2;
-      subText.y = JACKPOT_H + 72;
-      this.addChild(subText);
-    }
+  private _buildLogoArea(_store: AssetStore): void {
+    // 原版遊戲畫面中不顯示 Logo（僅在 LoadingScene 中出現）
+    // Logo 空間被 JackpotPool + FortuneBall 佔用
   }
 
   /**
@@ -295,74 +270,109 @@ export class BaseGameScene extends Container {
    *    所有素材使用原始尺寸，不拉伸
    */
   private _buildReelArea(store: AssetStore): void {
-    // ── 層次（由下到上）：Base_Reel → BaseFrame → ReelEngine ────
-    // BaseFrame 在 ReelEngine 之下，確保符號不被邊框遮擋
+    // ── 層次（由下到上）：BaseFrame → ReelEngine（含 Base_Reel） ────
 
-    // 1. 轉盤底圖（Base_Reel.png）— 拉伸至符號格線區域寬度
-    const reelBgTex = store.tryGetTexture('Base_Reel_png')
-                   ?? store.tryGetTexture('Base_Reel');
-    if (reelBgTex) {
-      const reelBg = new Sprite(reelBgTex);
-      // 底圖拉伸至符號格線寬度
-      reelBg.x = (W - GRID_W) / 2; // 100
-      reelBg.y = REEL_AREA_TOP;
-      reelBg.width = GRID_W;
-      reelBg.height = REEL_AREA_H;
-      this.addChild(reelBg);
-    }
-
-    // 2. 邊框裝飾（BaseFrame.png：896×716 金色圓框）— 在符號之下
+    // 1. 邊框裝飾（BaseFrame.png 896×716）— EXML: horizontalCenter=0, y=384
     const frameTex = store.tryGetTexture('BaseFrame_png')
                   ?? store.tryGetTexture('BaseFrame');
     if (frameTex) {
       const frame = new Sprite(frameTex);
       frame.x = FRAME_X;  // 352
-      frame.y = FRAME_Y;  // 302
+      frame.y = FRAME_Y;  // 26
       this.addChild(frame);
     }
 
-    // 3. ReelEngine（符號格線）— 最上層，不被遮擋
+    // 2. 聚寶盆/金樹裝飾（TopTree_BG.png 792×452）— EXML: horizontalCenter=0, y=519
+    const treeTex = store.tryGetTexture('TopTree_BG_png');
+    if (treeTex) {
+      const tree = new Sprite(treeTex);
+      tree.x = TREE_X;    // 404
+      tree.y = TREE_Y;    // 293
+      this.addChild(tree);
+    }
+
+    // 3. ReelEngine（符號格線 1202×640 native，縮放 0.75x）
+    //    EXML: horizontalCenter=0, y=971, anchorOffsetY=368, scale=0.75
     this._reelEngine = new ReelEngine(symbolManager.getTextureMap());
-    // 符號格線垂直置中於轉盤區
-    // 格線頂部 = REEL_AREA_TOP + (REEL_AREA_H - GRID_H)/2 = 400 + 20 = 420
-    // 容器 Y = 格線頂部 - ReelEngine 內部 REEL_AREA_Y(350) = 70
-    this._reelEngine.y = REEL_AREA_TOP + (REEL_AREA_H - GRID_H) / 2 - 350; // 70
+    this._reelEngine.pivot.set(REEL_PIVOT_X, REEL_PIVOT_Y); // (601, 368)
+    this._reelEngine.position.set(CENTER_X, REEL_SCREEN_Y);  // (800, 971)
+    this._reelEngine.scale.set(REEL_SCALE);                   // 0.75
     this.addChild(this._reelEngine);
   }
 
   /**
    * 5. 控制面板：WinDisplay / BalanceDisplay / BetSelector / SpinButton
    */
-  private async _buildControlPanel(_store: AssetStore): Promise<void> {
-    // ── WinDisplay（贏分顯示，轉盤下方中央）─────────────────────
-    this._winDisplay = new WinDisplay();
-    this._winDisplay.x = W / 2 - 160; // WinDisplay 寬 320，水平置中
-    this._winDisplay.y = WIN_DISPLAY_Y; // 1140
-    this.addChild(this._winDisplay);
-    await this._winDisplay.init();
+  private async _buildControlPanel(store: AssetStore): Promise<void> {
+    // ── 底部面板背景（Ui_Background.png 900×146）── EXML: y=1212
+    const panelTex = store.tryGetTexture('Ui_Background_png');
+    if (panelTex) {
+      const panel = new Sprite(panelTex);
+      panel.x = CX;           // 350
+      panel.y = PANEL_BG_Y;   // 1212
+      panel.width = 900;
+      panel.height = 146;
+      this.addChild(panel);
+    }
 
-    // ── BalanceDisplay（餘額，左側）─────────────────────────────
+    // ── BalanceDisplay（餘額，左側）── EXML: x=4, y=1226
     this._balanceDisplay = new BalanceDisplay(50000);
-    this._balanceDisplay.x = W / 2 - 400; // 左側（以畫面中心為基準偏左）
-    this._balanceDisplay.y = PANEL_Y; // 1260
+    this._balanceDisplay.x = BALANCE_X; // 354
+    this._balanceDisplay.y = INFO_Y;    // 1226
     this.addChild(this._balanceDisplay);
     await this._balanceDisplay.init();
 
-    // ── BetSelector（下注選擇，右側）────────────────────────────
+    // ── WinDisplay（贏分，中央）── EXML: x=302, y=1226
+    this._winDisplay = new WinDisplay();
+    this._winDisplay.x = WIN_X;    // 652
+    this._winDisplay.y = INFO_Y;   // 1226
+    this.addChild(this._winDisplay);
+    await this._winDisplay.init();
+
+    // ── BetSelector（下注，右側）── EXML: x=600, y=1226
     this._betSelector = new BetSelector(
       [10, 20, 50, 100, 200, 500],
-      100, // 預設下注 100
+      100,
     );
-    this._betSelector.x = W / 2 + 220; // 右側（以畫面中心為基準偏右）
-    this._betSelector.y = PANEL_Y; // 1260
+    this._betSelector.x = BET_X;   // 950
+    this._betSelector.y = INFO_Y;  // 1226
     this.addChild(this._betSelector);
     await this._betSelector.init();
 
-    // ── SpinButton（中央）────────────────────────────────────────
+    // ── SpinButton（中央大按鈕）── EXML: x=450, y=1442, anchor=(100,100)
     this._spinButton = new SpinButton();
-    this._spinButton.x = W / 2;  // SpinButton 以 (0,0) 為圓心，水平置中
-    this._spinButton.y = SPIN_BTN_Y; // 1420
+    this._spinButton.x = CENTER_X;     // 800
+    this._spinButton.y = SPIN_BTN_Y;   // 1442
     this.addChild(this._spinButton);
+
+    // ── Turbo 按鈕（左側）── EXML: x=51, y=1396 → placeholder
+    this._buildPlaceholderButton('TURBO', TURBO_X, TURBO_Y, 96, 96, 0x333333);
+
+    // ── Auto 按鈕（右側）── EXML: x=753, y=1396 → placeholder
+    this._buildPlaceholderButton('AUTO', AUTO_X, AUTO_Y, 96, 96, 0x333333);
+  }
+
+  /**
+   * 建立佔位按鈕（尚未有完整圖標時使用）
+   */
+  private _buildPlaceholderButton(
+    label: string, x: number, y: number, w: number, h: number, color: number,
+  ): void {
+    const btn = new Container();
+    const bg = new Graphics();
+    bg.roundRect(-w / 2, -h / 2, w, h, 12);
+    bg.fill(color);
+    bg.stroke({ width: 2, color: 0x666666 });
+    btn.addChild(bg);
+    const txt = new Text({
+      text: label,
+      style: new TextStyle({ fontFamily: 'Arial', fontSize: 16, fill: 0xffffff }),
+    });
+    txt.anchor.set(0.5);
+    btn.addChild(txt);
+    btn.x = x;
+    btn.y = y;
+    this.addChild(btn);
   }
 
   /**
@@ -520,7 +530,8 @@ export class BaseGameScene extends Container {
 
         // 金幣噴射：從畫面中央偏上方發射
         const coinCount = ratio >= 100 ? 80 : ratio >= 30 ? 50 : 30;
-        this._coinEffect.burst(W / 2, REEL_AREA_BOTTOM, coinCount);
+        // 金幣從轉盤底部噴射（EXML: 轉盤底 ≈ 971 + (640-368)*0.75 = 1175）
+this._coinEffect.burst(CENTER_X, 1175, coinCount);
       }
     } else {
       this._winDisplay.clear();

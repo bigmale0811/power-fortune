@@ -18,7 +18,7 @@
 
 import { Container, Texture, Graphics } from 'pixi.js';
 import { ReelStrip } from '@/reel/ReelStrip';
-import { SYMBOL_CELL_W, SYMBOL_CELL_H } from '@/reel/SymbolView';
+import { SYMBOL_CELL_H } from '@/reel/SymbolView';
 import type { ReadonlyMap } from '@/reel/types';
 import { globalEventBus } from '@/core/EventBus';
 
@@ -42,12 +42,17 @@ export const EVENT_ALL_STOPPED = 'REEL_ENGINE:ALL_STOPPED';
 const COLS = 5;
 /** 可見列數 */
 const ROWS = 4;
-/** 欄間距（像素） */
-const COL_GAP = 2;
-/** 轉盤區左上角 X（在 1600px 畫布上置中 1400px 符號區域） */
-const REEL_AREA_X = (1600 - COLS * SYMBOL_CELL_W) / 2; // 100
-/** 轉盤區左上角 Y */
-const REEL_AREA_Y = 350;
+
+/**
+ * EXML ReelViewSkin 原生座標（1202×640 容器）
+ * 5 個 ReelGroup 各 224×592，y=32
+ * 欄 X 座標：16, 252, 488, 724, 960
+ * 整個容器由 BaseGameScene 定位與縮放（0.75x）
+ */
+const COL_X = [16, 252, 488, 724, 960];
+const STRIP_Y = 32;
+/** 原生容器寬度（ReelViewSkin fxGP） */
+const CONTAINER_W = 1202;
 
 /** 各欄旋轉開始的交錯延遲（毫秒） */
 const STAGGER_START_MS = 100;
@@ -93,19 +98,19 @@ export class ReelEngine extends Container {
   constructor(textures: ReadonlyMap<number, Texture>) {
     super();
 
-    // 建立遮罩容器，子容器位置相對轉盤區左上角
+    // 建立遮罩容器（原生 1202×640 空間，由 BaseGameScene 控制外部定位與縮放）
     this._maskContainer = new Container();
-    this._maskContainer.x = REEL_AREA_X;
-    this._maskContainer.y = REEL_AREA_Y;
+    this._maskContainer.x = 0;
+    this._maskContainer.y = 0;
     this.addChild(this._maskContainer);
 
-    // 建立並排列 5 個 ReelStrip
+    // 建立並排列 5 個 ReelStrip（EXML 精確座標）
     const strips: ReelStrip[] = [];
     for (let col = 0; col < COLS; col++) {
       const strip = new ReelStrip(textures, col);
-      // 每欄 X 位置：col × (CELL_W + GAP)
-      strip.x = col * (SYMBOL_CELL_W + COL_GAP);
-      strip.y = 0;
+      // EXML ReelViewSkin 精確欄位 X 座標
+      strip.x = COL_X[col] ?? 0;
+      strip.y = STRIP_Y;
       this._maskContainer.addChild(strip);
       strips.push(strip);
     }
@@ -273,7 +278,8 @@ export class ReelEngine extends Container {
     // 在 PixiJS v8 中，使用 Graphics 作為 mask 需要設定在容器父層
     // 此處建立矩形遮罩並附加到 _maskContainer
     const mask = new Graphics();
-    mask.rect(0, 0, COLS * SYMBOL_CELL_W + (COLS - 1) * COL_GAP, ROWS * SYMBOL_CELL_H);
+    // 裁剪至 EXML 可見轉盤區域（y=32 起始，592px 高 = 4行×148）
+    mask.rect(0, STRIP_Y, CONTAINER_W, ROWS * SYMBOL_CELL_H);
     mask.fill(0xffffff);
     this._maskContainer.addChild(mask);
     this._maskContainer.mask = mask;

@@ -13,9 +13,9 @@
 
 import { Container, Sprite, Texture } from 'pixi.js';
 
-/** 每格尺寸（對齊原版：符號幾乎填滿螢幕寬度 5col×280=1400） */
-export const SYMBOL_CELL_W = 280;
-export const SYMBOL_CELL_H = 195;
+/** 每格尺寸（對齊原版 ReelViewSkin.exml：224×148 × 5col = 1120×592） */
+export const SYMBOL_CELL_W = 224;
+export const SYMBOL_CELL_H = 148;
 
 /** Scale Pulse 動畫參數 */
 const PULSE_MIN = 1.0;
