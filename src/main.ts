@@ -28,7 +28,7 @@ import type { EgretMCData } from '@/reel/SymbolManager';
 
 // ─────────────────────── 版面常數 ───────────────────────
 
-const GAME_W = 1600;
+const GAME_W = 900;
 const GAME_H = 2000;
 
 // ─────────────────────── 主要啟動函式 ───────────────────────
@@ -131,7 +131,7 @@ async function bootstrap(): Promise<void> {
  * @param canvas - PixiJS app.canvas（HTMLCanvasElement）
  */
 function setupLetterbox(canvas: HTMLCanvasElement): void {
-  // 套用 CSS 使 canvas 置中（Letterbox：保持 1600:2000 = 4:5 比例）
+  // 套用 CSS 使 canvas 置中（Letterbox：保持 900:2000 = 9:20 比例）
   canvas.style.position = 'absolute';
   canvas.style.left     = '50%';
   canvas.style.top      = '50%';

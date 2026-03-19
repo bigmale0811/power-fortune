@@ -35,7 +35,7 @@ import { globalEventBus } from '@/core/EventBus';
 // ─────────────────────── 版面常數 ───────────────────────
 
 /** 畫布寬度（對齊原版 1600×2000 設計解析度） */
-const W = 1600;
+const W = 900;
 
 /** 旋轉計數器高度 */
 const COUNTER_H = 80;

@@ -39,7 +39,7 @@ import { MiniGameController, BallType, SettlementResult } from '@/features/MiniG
 // ─────────────────────── 版面常數 ───────────────────────
 
 /** 畫布寬度（對齊原版 1600×2000 設計解析度） */
-const W = 1600;
+const W = 900;
 
 /** 標題區高度 */
 const TITLE_H = 200;

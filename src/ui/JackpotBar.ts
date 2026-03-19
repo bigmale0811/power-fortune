@@ -14,7 +14,7 @@ import { Container, Graphics, Sprite, Text, TextStyle, Assets, Ticker } from 'pi
  */
 
 // ── 面板尺寸 ─────────────────────────────────────────────────────────────────
-const BAR_W = 1600;
+const BAR_W = 900;
 const BAR_H = 48;
 const TIER_W = BAR_W / 4;  // 每個等級寬度 = 225px
 

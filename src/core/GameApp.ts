@@ -10,7 +10,7 @@ import { Application, Container } from 'pixi.js';
 import { ResizeManager } from '@/core/ResizeManager';
 
 /** 遊戲設計解析度（直向，對齊原版 Base_BG.jpg 1600×2000） */
-export const GAME_WIDTH = 1600;
+export const GAME_WIDTH = 900;
 export const GAME_HEIGHT = 2000;
 
 export class GameApp {

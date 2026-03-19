@@ -50,26 +50,19 @@ import { SoundManager } from '@/audio/SoundManager';
 import { globalEventBus } from '@/core/EventBus';
 import type { SpinResult } from '@/core/constants';
 
-// ─────────────────── EXML 精確版面常數（900-wide portrait → 1600-wide canvas） ──────────────────
+// ─────────────────── EXML 精確版面常數（900×2000 直式畫布，直接使用） ──────────────────
 
-/** 畫布寬度（Base_BG.jpg 原始尺寸 1600×2000） */
-const W = 1600;
-
-/**
- * 內容偏移量：原版直式為 900×2000，嵌入 1600 寬畫布需偏移 (1600-900)/2 = 350
- * 所有 EXML x 座標 + CX = 1600 空間座標
- */
-const CX = 350;
-
-/** 900 寬內容區中心在 1600 畫布上的 X */
-const CENTER_X = 800;
+/** 畫布寬度（對齊原版 EXML portrait 解析度） */
+const W = 900;
+/** 畫布中心 X */
+const CENTER_X = 450;
 
 // ── BaseFrame（金色圓框裝飾）── EXML: horizontalCenter=0, y=384, anchor=(448,358)
-const FRAME_X = CENTER_X - 448;   // 352
+const FRAME_X = CENTER_X - 448;   // 2
 const FRAME_Y = 384 - 358;        // 26
 
 // ── FortuneBall 聚寶盆/金樹 ── EXML: horizontalCenter=0, y=519, anchorOffsetY=226, skin 792×452
-const TREE_X = CENTER_X - 396;    // 404 (792/2=396)
+const TREE_X = CENTER_X - 396;    // 54 (792/2=396)
 const TREE_Y = 519 - 226;         // 293
 
 // ── ReelView ── EXML: horizontalCenter=0, y=971, anchorOffsetY=368, scale=0.75, native 1202×640
@@ -78,26 +71,19 @@ const REEL_PIVOT_Y = 368;
 const REEL_SCREEN_Y = 971;
 const REEL_SCALE = 0.75;
 
-// ── JackpotPool ── EXML portrait 座標（預留給 JackpotBar 精確化）
-// Grand: center=800, y=155, anchorOffsetY=62 → top≈93
-// Major: center=800, y=287, anchorOffsetY=54 → top≈233
-// Minor: x=352, y=361 | Mini: x=916, y=361
-
-// ── ControlView 底部面板 ── EXML portrait 座標
+// ── ControlView 底部面板 ── EXML portrait 座標（直接使用）
 const PANEL_BG_Y = 1212;          // Ui_Background.png y
 const INFO_Y = 1226;              // Balance/Win/Bet 標籤列 y
-const BALANCE_X = CX + 4;         // 354
-const WIN_X = CX + 302;           // 652
-const BET_X = CX + 600;           // 950
+const BALANCE_X = 4;              // EXML 直接值
+const WIN_X = 302;                // EXML 直接值
+const BET_X = 600;                // EXML 直接值
 
-// ── 按鈕列 ── EXML portrait 座標
+// ── 按鈕列 ── EXML portrait 座標（直接使用）
 const SPIN_BTN_Y = 1442;          // spinBtnGp y, anchor=(100,100)
-const TURBO_X = CX + 51;          // 401
+const TURBO_X = 51;               // EXML 直接值
 const TURBO_Y = 1396;
-const AUTO_X = CX + 753;          // 1103
+const AUTO_X = 753;               // EXML 直接值
 const AUTO_Y = 1396;
-// Plus/Minus bet 按鈕（條件顯示，暫不建立）
-// PLUS_BET: x=988, MINUS_BET: x=610, y=1442
 
 /** 訊息文字 Y（面板下方） */
 const MSG_Y = 1560;
@@ -228,14 +214,12 @@ export class BaseGameScene extends Container {
     try {
       const bgTex = store.getTexture('Base_BG_jpg');
       const bg    = new Sprite(bgTex);
-      // 原圖即為 1600×2000，直接以原始尺寸放置（不拉伸）
-      bg.x = 0;
+      // Base_BG.jpg 原圖 1600×2000，在 900 寬畫布中置中顯示
+      // EXML: horizontalCenter="0" → x = (900 - 1600) / 2 = -350
+      bg.x = (W - bgTex.width) / 2;
       bg.y = 0;
       this.addChild(bg);
-      console.log(`[BaseGameScene] Base_BG 放置完成：` +
-        `原始尺寸=${bgTex.width}×${bgTex.height}`);
     } catch {
-      // Base_BG.jpg 鍵名可能因 res.json 而異，容錯處理
       console.warn('[BaseGameScene] Base_BG 貼圖未找到，使用純色背景');
     }
   }
@@ -308,9 +292,9 @@ export class BaseGameScene extends Container {
     const panelTex = store.tryGetTexture('Ui_Background_png');
     if (panelTex) {
       const panel = new Sprite(panelTex);
-      panel.x = CX;           // 350
+      panel.x = 0;
       panel.y = PANEL_BG_Y;   // 1212
-      panel.width = 900;
+      panel.width = W;         // 900
       panel.height = 146;
       this.addChild(panel);
     }
@@ -530,8 +514,7 @@ export class BaseGameScene extends Container {
 
         // 金幣噴射：從畫面中央偏上方發射
         const coinCount = ratio >= 100 ? 80 : ratio >= 30 ? 50 : 30;
-        // 金幣從轉盤底部噴射（EXML: 轉盤底 ≈ 971 + (640-368)*0.75 = 1175）
-this._coinEffect.burst(CENTER_X, 1175, coinCount);
+        this._coinEffect.burst(CENTER_X, 1175, coinCount);
       }
     } else {
       this._winDisplay.clear();
