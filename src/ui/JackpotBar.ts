@@ -103,8 +103,10 @@ export class JackpotBar extends Container {
       const tier = TIERS[i]!;
 
       // ── 獎池徽章圖片：先試 AssetStore，再試直接載入 ──
-      const tex = store.tryGetTexture(tier.textureKey)
-        ?? (directLoads[i]?.status === 'fulfilled' ? directLoads[i].value : null);
+      const directResult = directLoads[i];
+      const directTex = directResult?.status === 'fulfilled'
+        ? (directResult as PromiseFulfilledResult<any>).value : null;
+      const tex = store.tryGetTexture(tier.textureKey) ?? directTex;
 
       if (tex) {
         const sprite = new Sprite(tex);
