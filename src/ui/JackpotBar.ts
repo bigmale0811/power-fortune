@@ -1,4 +1,4 @@
-import { Container, Sprite, Text, TextStyle, Ticker } from 'pixi.js';
+import { Container, Sprite, Text, TextStyle, Ticker, Assets } from 'pixi.js';
 import { AssetStore } from '@/assets/AssetStore';
 
 /**
@@ -20,6 +20,8 @@ interface TierConfig {
   readonly id: string;
   /** AssetStore 中的貼圖鍵名（對應 default.res.json） */
   readonly textureKey: string;
+  /** 直接載入路徑（AssetStore 找不到時的 fallback） */
+  readonly assetPath: string;
   /** EXML 精確 X（左上角），null 表示 horizontalCenter=0 */
   readonly x: number | null;
   /** EXML 精確 Y（頂部，已扣除 anchorOffset） */
@@ -40,6 +42,7 @@ const TIERS: readonly TierConfig[] = Object.freeze([
   {
     id: 'grand',
     textureKey: 'JpPool_Grand_png',
+    assetPath: 'assets/Common/Jackpot/Pool/JpPool_Grand.png',
     x: null, y: 93, imgW: 728, imgH: 124,
     textOffsetX: 107, textOffsetY: 0,
     fontSize: 38,
@@ -49,6 +52,7 @@ const TIERS: readonly TierConfig[] = Object.freeze([
   {
     id: 'major',
     textureKey: 'JpPool_Major_png',
+    assetPath: 'assets/Common/Jackpot/Pool/JpPool_Major.png',
     x: null, y: 233, imgW: 632, imgH: 108,
     textOffsetX: 98, textOffsetY: 0,
     fontSize: 28,
@@ -58,6 +62,7 @@ const TIERS: readonly TierConfig[] = Object.freeze([
   {
     id: 'minor',
     textureKey: 'JpPool_Minor_png',
+    assetPath: 'assets/Common/Jackpot/Pool/JpPool_Minor.png',
     x: 2, y: 361, imgW: 332, imgH: 64,
     textOffsetX: 65, textOffsetY: 0,
     fontSize: 18,
@@ -67,6 +72,7 @@ const TIERS: readonly TierConfig[] = Object.freeze([
   {
     id: 'mini',
     textureKey: 'JpPool_Mini_png',
+    assetPath: 'assets/Common/Jackpot/Pool/JpPool_Mini.png',
     x: 566, y: 361, imgW: 332, imgH: 64,
     textOffsetX: -62, textOffsetY: 0,
     fontSize: 18,
@@ -88,11 +94,18 @@ export class JackpotBar extends Container {
   async init(): Promise<void> {
     const store = AssetStore.instance;
 
+    // 先嘗試直接載入所有圖片（確保可用）
+    const directLoads = await Promise.allSettled(
+      TIERS.map(t => Assets.load(t.assetPath)),
+    );
+
     for (let i = 0; i < TIERS.length; i++) {
       const tier = TIERS[i]!;
 
-      // ── 獎池徽章圖片（從 AssetStore 取得，已由 AssetPipeline 載入） ──
-      const tex = store.tryGetTexture(tier.textureKey);
+      // ── 獎池徽章圖片：先試 AssetStore，再試直接載入 ──
+      const tex = store.tryGetTexture(tier.textureKey)
+        ?? (directLoads[i]?.status === 'fulfilled' ? directLoads[i].value : null);
+
       if (tex) {
         const sprite = new Sprite(tex);
         sprite.anchor.set(0.5, 0);
@@ -103,6 +116,9 @@ export class JackpotBar extends Container {
         }
         sprite.y = tier.y;
         this.addChild(sprite);
+        console.log(`[JackpotBar] ${tier.id} badge loaded: ${tex.width}×${tex.height}`);
+      } else {
+        console.warn(`[JackpotBar] ${tier.id} badge NOT found`);
       }
 
       // ── 金額計數器文字 ──
