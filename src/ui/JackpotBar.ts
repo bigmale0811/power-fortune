@@ -1,4 +1,5 @@
-import { Container, Sprite, Text, TextStyle, Assets, Ticker } from 'pixi.js';
+import { Container, Sprite, Text, TextStyle, Ticker } from 'pixi.js';
+import { AssetStore } from '@/assets/AssetStore';
 
 /**
  * JackpotBar — 四級頭獎顯示（Power Fortune 財神報喜）
@@ -17,7 +18,8 @@ const CENTER_X = W / 2; // 450
 
 interface TierConfig {
   readonly id: string;
-  readonly assetPath: string;
+  /** AssetStore 中的貼圖鍵名（對應 default.res.json） */
+  readonly textureKey: string;
   /** EXML 精確 X（左上角），null 表示 horizontalCenter=0 */
   readonly x: number | null;
   /** EXML 精確 Y（頂部，已扣除 anchorOffset） */
@@ -37,16 +39,16 @@ interface TierConfig {
 const TIERS: readonly TierConfig[] = Object.freeze([
   {
     id: 'grand',
-    assetPath: 'assets/Common/Jackpot/Pool/JpPool_Grand.png',
+    textureKey: 'JpPool_Grand_png',
     x: null, y: 93, imgW: 728, imgH: 124,
-    textOffsetX: 107, textOffsetY: 0,  // EXML grandAmount horizontalCenter=107
+    textOffsetX: 107, textOffsetY: 0,
     fontSize: 38,
     baseValue: 1000018.48, increment: 0.55,
     textColor: 0xffd700,
   },
   {
     id: 'major',
-    assetPath: 'assets/Common/Jackpot/Pool/JpPool_Major.png',
+    textureKey: 'JpPool_Major_png',
     x: null, y: 233, imgW: 632, imgH: 108,
     textOffsetX: 98, textOffsetY: 0,
     fontSize: 28,
@@ -55,7 +57,7 @@ const TIERS: readonly TierConfig[] = Object.freeze([
   },
   {
     id: 'minor',
-    assetPath: 'assets/Common/Jackpot/Pool/JpPool_Minor.png',
+    textureKey: 'JpPool_Minor_png',
     x: 2, y: 361, imgW: 332, imgH: 64,
     textOffsetX: 65, textOffsetY: 0,
     fontSize: 18,
@@ -64,9 +66,9 @@ const TIERS: readonly TierConfig[] = Object.freeze([
   },
   {
     id: 'mini',
-    assetPath: 'assets/Common/Jackpot/Pool/JpPool_Mini.png',
+    textureKey: 'JpPool_Mini_png',
     x: 566, y: 361, imgW: 332, imgH: 64,
-    textOffsetX: -62, textOffsetY: 0,   // EXML miniAmount horizontalCenter=-61.5
+    textOffsetX: -62, textOffsetY: 0,
     fontSize: 18,
     baseValue: 1000.00, increment: 0.06,
     textColor: 0xffd700,
@@ -84,21 +86,17 @@ export class JackpotBar extends Container {
   }
 
   async init(): Promise<void> {
-    // 並行載入所有獎池圖片
-    const loadResults = await Promise.allSettled(
-      TIERS.map(t => Assets.load(t.assetPath)),
-    );
+    const store = AssetStore.instance;
 
     for (let i = 0; i < TIERS.length; i++) {
       const tier = TIERS[i]!;
-      const result = loadResults[i]!;
 
-      // ── 獎池徽章圖片 ──
-      if (result.status === 'fulfilled') {
-        const sprite = new Sprite(result.value);
+      // ── 獎池徽章圖片（從 AssetStore 取得，已由 AssetPipeline 載入） ──
+      const tex = store.tryGetTexture(tier.textureKey);
+      if (tex) {
+        const sprite = new Sprite(tex);
         sprite.anchor.set(0.5, 0);
         if (tier.x === null) {
-          // horizontalCenter=0
           sprite.x = CENTER_X;
         } else {
           sprite.x = tier.x + tier.imgW / 2;
