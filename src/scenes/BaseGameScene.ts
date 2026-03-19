@@ -279,7 +279,7 @@ export class BaseGameScene extends Container {
     //    EXML: horizontalCenter=0, y=971, anchorOffsetY=368, scale=0.75
     this._reelEngine = new ReelEngine(symbolManager.getTextureMap());
     this._reelEngine.pivot.set(REEL_PIVOT_X, REEL_PIVOT_Y); // (601, 368)
-    this._reelEngine.position.set(CENTER_X, REEL_SCREEN_Y);  // (800, 971)
+    this._reelEngine.position.set(CENTER_X, REEL_SCREEN_Y);  // (450, 971)
     this._reelEngine.scale.set(REEL_SCALE);                   // 0.75
     this.addChild(this._reelEngine);
   }
